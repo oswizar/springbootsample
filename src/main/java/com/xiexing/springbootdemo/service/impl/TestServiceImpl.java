@@ -27,14 +27,14 @@ public class TestServiceImpl implements TestIService {
     @Autowired
     private DepartmentMapper departmentMapper;
 
-    @TargetDataSource("oracle")
+    @TargetDataSource("ORACLE")
     @Override
     public List<AppAdvice> queryWfiAppAdvice(Map param) {
         List list = testMapper.queryWfiAppAdviceHistory(param);
         return list;
     }
 
-    @TargetDataSource("mysql")
+    @TargetDataSource("MYSQL4")
     @Override
     public Department queryDepartment(String id) {
         return departmentMapper.queryDepartment(id);

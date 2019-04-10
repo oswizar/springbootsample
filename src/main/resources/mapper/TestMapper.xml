@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiexing.springbootdemo.dao.TestMapper">
+    <resultMap id="BaseResultMap" type="com.xiexing.springbootdemo.entity.AppAdvice">
+        <id column="WFI_APP_ADVICE_ID" property="wfiAppAdviceId" jdbcType="DECIMAL"/>
+        <result column="APPR_OPT" property="apprOpt" jdbcType="VARCHAR"/>
+        <result column="INV_DOC" property="invDoc" jdbcType="VARCHAR"/>
+        <result column="INV_OPT" property="invOpt" jdbcType="VARCHAR"/>
+        <result column="INV_REQ" property="invReq" jdbcType="VARCHAR"/>
+        <result column="APP_CONCLUSION" property="appConclusion" jdbcType="VARCHAR"/>
+        <result column="FRAUD_TYP" property="fraudTyp" jdbcType="VARCHAR"/>
+        <result column="FRAUD_KIND" property="fraudKind" jdbcType="VARCHAR"/>
+        <result column="FRAUD_PART" property="fraudPart" jdbcType="VARCHAR"/>
+        <result column="FRAUD_DEALER" property="fraudDealer" jdbcType="VARCHAR"/>
+        <result column="FRAUD_BLK" property="fraudBlk" jdbcType="VARCHAR"/>
+        <result column="REJECT_RSN" property="rejectRsn" jdbcType="VARCHAR"/>
+        <result column="APP_ADVICE" property="appAdvice" jdbcType="VARCHAR"/>
+        <result column="APP_OUT_ADVICE" property="appOutAdvice" jdbcType="VARCHAR"/>
+        <result column="APP_IN_ADVICE" property="appInAdvice" jdbcType="VARCHAR"/>
+        <result column="WFI_INSTANCE_ID" property="wfiInstanceId" jdbcType="VARCHAR"/>
+        <result column="WFI_NODE_ID" property="wfiNodeId" jdbcType="VARCHAR"/>
+        <result column="WFI_NODE_NAME" property="wfiNodeName" jdbcType="VARCHAR"/>
+        <result column="WFI_SCENE_ID" property="wfiSceneId" jdbcType="VARCHAR"/>
+        <result column="WFSIGN" property="wfsign" jdbcType="VARCHAR"/>
+        <result column="APP_USER" property="appUser" jdbcType="VARCHAR"/>
+        <result column="APP_ORG" property="appOrg" jdbcType="VARCHAR"/>
+        <result column="OPERATE_TIME" property="operateTime" jdbcType="VARCHAR"/>
+        <result column="REMARK" property="remark" jdbcType="VARCHAR"/>
+        <result column="WFI_STATUS" property="wfiStatus" jdbcType="VARCHAR"/>
+        <result column="WFI_PRO_TYP" property="wfiProTyp" jdbcType="VARCHAR"/>
+        <result column="WFI_NODE_SIGN" property="wfiNodeSign" jdbcType="VARCHAR"/>
+        <result column="WFI_NODE_SEQ" property="wfiNodeSeq" jdbcType="VARCHAR"/>
+        <result column="APP_ORG_NAME" property="appOrgName" jdbcType="VARCHAR"/>
+        <result column="APP_USER_NAME" property="appUserName" jdbcType="VARCHAR"/>
+        <result column="DEAL_USR" property="dealUsr" jdbcType="VARCHAR"/>
+        <result column="CALL_RPT" property="callRpt" jdbcType="VARCHAR"/>
+        <result column="GUTR_OPT" property="gutrOpt" jdbcType="VARCHAR"/>
+        <result column="MAX_APPRV_AMT" property="maxApprvAmt" jdbcType="DECIMAL"/>
+        <result column="MAX_APPRV_TNR" property="maxApprvTnr" jdbcType="DECIMAL"/>
+        <result column="MIN_FST_PAY" property="minFstPay" jdbcType="DECIMAL"/>
+        <result column="DAYBOOK_IND" property="daybookInd" jdbcType="VARCHAR"/>
+        <result column="IS_CHEAT" property="isCheat" jdbcType="VARCHAR"/>
+        <result column="UNIT_RSN" property="unitRsn" jdbcType="VARCHAR"/>
+        <result column="ASS_CAR_PRICE" property="assCarPrice" jdbcType="DECIMAL"/>
+        <result column="TAIL" property="tail" jdbcType="VARCHAR"/>
+        <result column="INTEND" property="intend" jdbcType="VARCHAR"/>
+        <result column="RELATION" property="relation" jdbcType="VARCHAR"/>
+        <result column="ADD_INFO" property="addInfo" jdbcType="VARCHAR"/>
+        <result column="OTHER" property="other" jdbcType="VARCHAR"/>
+        <result column="APP_SUPPLEMENT_ADVICE" property="appSupplementAdvice" jdbcType="VARCHAR"/>
+        <result column="GPS_COUNT" property="gpsCount" jdbcType="VARCHAR"/>
+        <result column="USR_NAME" property="usrName" jdbcType="VARCHAR" />
+        <result column="APPLY_AMT" property="applyAmt" jdbcType="VARCHAR" />
+        <result column="APPRV_TNR" property="apprvTnr" jdbcType="VARCHAR" />
+        <result column="FST_PCT" property="fstPct" jdbcType="DECIMAL" />
+        <result column="SALER_NAME" property="salerName" jdbcType="VARCHAR" />
+        <result column="SALER_MOBILE" property="salerMobile" jdbcType="VARCHAR" />
+        <result column="BCH_DESC" property="bchDesc" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+    WFI_APP_ADVICE_ID, APPR_OPT, INV_DOC, INV_OPT, INV_REQ, APP_CONCLUSION, FRAUD_TYP, 
+    FRAUD_KIND, FRAUD_PART, FRAUD_DEALER, FRAUD_BLK, REJECT_RSN, APP_ADVICE, APP_OUT_ADVICE, 
+    APP_IN_ADVICE, WFI_INSTANCE_ID, WFI_NODE_ID, WFI_NODE_NAME, WFI_SCENE_ID, WFSIGN, 
+    APP_USER, APP_ORG, OPERATE_TIME, REMARK, WFI_STATUS, WFI_PRO_TYP, WFI_NODE_SIGN, 
+    WFI_NODE_SEQ, APP_ORG_NAME, APP_USER_NAME, DEAL_USR, CALL_RPT, GUTR_OPT, MAX_APPRV_AMT, 
+    MAX_APPRV_TNR, MIN_FST_PAY, DAYBOOK_IND, IS_CHEAT, UNIT_RSN, ASS_CAR_PRICE, TAIL, 
+    INTEND, RELATION, ADD_INFO, OTHER, APP_SUPPLEMENT_ADVICE, GPS_COUNT
+  </sql>
+
+
+    <select id="queryWfiAppAdviceHistory" parameterType="java.util.Map" resultMap="BaseResultMap">
+        SELECT WFI_APP_ADVICE_ID,
+        APPR_OPT,
+        INV_DOC,
+        INV_OPT,
+        INV_REQ,
+        APP_CONCLUSION,
+        FRAUD_TYP,
+        FRAUD_KIND,
+        FRAUD_PART,
+        FRAUD_DEALER,
+        FRAUD_BLK,
+        REJECT_RSN,
+        APP_ADVICE,
+        APP_OUT_ADVICE,
+        APP_IN_ADVICE,
+        ASS_CAR_PRICE,
+        TAIL,
+        INTEND,
+        RELATION,
+        ADD_INFO,
+        OTHER,
+        WFI_INSTANCE_ID,
+        WFI_NODE_ID,
+        WFI_NODE_NAME,
+        WFI_SCENE_ID,
+        WFSIGN,
+        APP_USER,
+        APP_ORG,
+        OPERATE_TIME,
+        REMARK,
+        APP_SUPPLEMENT_ADVICE,
+        WFI_STATUS,
+        WFI_PRO_TYP,
+        WFI_NODE_SIGN,
+        WFI_NODE_SEQ,
+        APP_ORG_NAME,
+        GPS_COUNT,
+        APP_USER_NAME,
+        DEAL_USR,
+        CALL_RPT,
+        GUTR_OPT,
+        MAX_APPRV_AMT,
+        MAX_APPRV_TNR,
+        MIN_FST_PAY
+        from WFI_APP_ADVICE
+        where WFI_INSTANCE_ID = #{instanceId,jdbcType=VARCHAR}
+        <if test="nodeIds!=null">
+            AND WFI_NODE_ID IN
+            <foreach item="item" index="index" collection="nodeIds" open="(" separator="," close=")">#{item}</foreach>
+        </if>
+        ORDER BY OPERATE_TIME ASC
+    </select>
+
+
+</mapper>

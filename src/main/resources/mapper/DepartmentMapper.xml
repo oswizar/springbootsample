@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiexing.springbootdemo.dao.DepartmentMapper">
+    <resultMap id="BaseResultMap" type="com.xiexing.springbootdemo.entity.Department">
+        <id column="ID" property="id" jdbcType="DECIMAL"/>
+        <result column="DepartmentName" property="departmentName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    ID,DepartmentName
+  </sql>
+
+
+    <select id="queryDepartment" parameterType="string" resultMap="BaseResultMap">
+        SELECT ID,departmentName
+        from department
+        where ID = #{id,jdbcType=VARCHAR}
+    </select>
+
+
+</mapper>

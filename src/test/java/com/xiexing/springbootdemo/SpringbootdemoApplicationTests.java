@@ -2,6 +2,7 @@ package com.xiexing.springbootdemo;
 
 import com.xiexing.springbootdemo.controller.HelloWorldController;
 import com.xiexing.springbootdemo.entity.User;
+import com.xiexing.springbootdemo.util.RedisUtils;
 import jdk.net.SocketFlow;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
@@ -39,6 +40,9 @@ public class SpringbootdemoApplicationTests {
 
     @Autowired
     User user;
+
+    @Autowired
+    RedisUtils redisUtils;
 
     @Before
     public void setUp() {

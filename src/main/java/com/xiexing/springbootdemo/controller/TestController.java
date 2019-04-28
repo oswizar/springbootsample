@@ -3,6 +3,7 @@ package com.xiexing.springbootdemo.controller;
 import com.xiexing.springbootdemo.entity.AppAdvice;
 import com.xiexing.springbootdemo.entity.Department;
 import com.xiexing.springbootdemo.service.TestIService;
+import com.xiexing.springbootdemo.util.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,9 @@ public class TestController {
 
     @Autowired
     private TestIService testService;
+
+    @Autowired
+    private RedisUtils redisUtils;
 
     @ResponseBody
     @RequestMapping("/testInterfaceMybatis")
@@ -58,4 +62,15 @@ public class TestController {
         result.put("data","1111111111111111111111111111111");
         return result;
     }
+
+    @ResponseBody
+    @RequestMapping("/redisTest")
+    public String redisTest() {
+        String str = "redis test";
+        redisUtils.set("example",str);
+        log.info("redisssssssssssssssssssssssssssssssssssssssssssssss");
+        return "redis test success";
+    }
+
+
 }

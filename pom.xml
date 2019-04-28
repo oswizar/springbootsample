@@ -21,13 +21,26 @@
 
 	<dependencies>
 
+		<!--支持redis缓存依赖,1.5的版本默认采用的客户端是jedis,2.0以上版本默认为lettuce-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+
+		<!--添加对象连接池依赖-->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-pool2</artifactId>
+			<version>2.6.2</version>
+		</dependency>
+
 		<!--支持web模块的依赖-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<!--支持web模块的依赖-->
+		<!--支持jdbc模块的依赖-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
@@ -59,15 +72,12 @@
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 
-
 		<!-- dubbo -->
 		<dependency>
 			<groupId>io.dubbo.springboot</groupId>
 			<artifactId>spring-boot-starter-dubbo</artifactId>
 			<version>1.0.0</version>
 		</dependency>
-
-
 
 		<!-- https://mvnrepository.com/artifact/org.apache.zookeeper/zookeeper -->
 		<dependency>
@@ -77,8 +87,6 @@
 			<type>pom</type>
 		</dependency>
 
-
-
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -86,7 +94,6 @@
 			<version>1.18.4</version>
 			<scope>provided</scope>
 		</dependency>
-
 
         <!--引入jquery-->
 		<dependency>

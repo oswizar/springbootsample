@@ -1,11 +1,4 @@
-///**
-// * Copyright (C): 长安新生(深圳)金融投资有限公司
-// * FileName: DruidConfig
-// * Author:   xiexing
-// * Date:     2019/3/8 16:11
-// * Description:
-// */
-//package com.xiexing.springbootdemo.datasource;
+//package com.xiexing.springbootdemo.config;
 //
 //import com.alibaba.druid.pool.DruidDataSource;
 //import com.alibaba.druid.support.http.StatViewServlet;

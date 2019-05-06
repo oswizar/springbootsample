@@ -34,7 +34,7 @@ public class TestServiceImpl implements TestIService {
         return list;
     }
 
-    @TargetDataSource("MYSQL4")
+    @TargetDataSource("MYSQL")
     @Override
     public Department queryDepartment(String id) {
         return departmentMapper.queryDepartment(id);

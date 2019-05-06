@@ -39,7 +39,7 @@ public class DynamicDataSourceAspect {
     @After("@annotation(targetDataSource)")
     public void afterSwitchDS(JoinPoint point, TargetDataSource targetDataSource) {
 
-        System.out.println("Revert DataSource : {} >>> {}" + targetDataSource.value() + point.getSignature());
+        log.info("Revert DataSource : {} >>> {}", targetDataSource.value(), point.getSignature());
 
         //方法执行完毕之后,销毁当前数据源信息,进行垃圾回收
         DataSourceContextHolder.clearDB();

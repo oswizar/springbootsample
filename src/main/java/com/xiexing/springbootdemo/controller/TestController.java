@@ -35,7 +35,7 @@ public class TestController {
     public Map testInterfaceMybatis() {
         Map result = new HashMap();
         Map param = new HashMap();
-        param.put("instanceId","8F4F7DD756A90823");
+        param.put("instanceId","2E767A073E2216F9");
         List<AppAdvice> appAdvices = new ArrayList<>();
         appAdvices = testService.queryWfiAppAdvice(param);
         log.info("查询数据库返回=================>{}",appAdvices.toString());

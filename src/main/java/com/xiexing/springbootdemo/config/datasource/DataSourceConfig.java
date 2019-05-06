@@ -1,5 +1,6 @@
 package com.xiexing.springbootdemo.config.datasource;
 
+import com.alibaba.druid.pool.DruidDataSource;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -22,14 +23,16 @@ public class DataSourceConfig {
     @Bean(name = "MYSQL")
     @ConfigurationProperties(prefix = "spring.datasource.mysql") // application.properteis中对应属性的前缀
     public DataSource dataSourceMYSQL() {
-        return DataSourceBuilder.create().build();
+//        return DataSourceBuilder.create().build();
+        return new DruidDataSource();
     }
 
     //ORACLE
     @Bean(name = "ORACLE")
     @ConfigurationProperties(prefix = "spring.datasource.oracle") // application.properteis中对应属性的前缀
     public DataSource dataSourceORACLE() {
-        return DataSourceBuilder.create().build();
+//        return DataSourceBuilder.create().build();
+        return new DruidDataSource();
     }
 
     /**

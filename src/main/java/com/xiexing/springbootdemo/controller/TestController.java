@@ -2,18 +2,20 @@ package com.xiexing.springbootdemo.controller;
 
 import com.xiexing.springbootdemo.entity.AppAdvice;
 import com.xiexing.springbootdemo.entity.Department;
+import com.xiexing.springbootdemo.entity.Employee;
+import com.xiexing.springbootdemo.entity.User;
 import com.xiexing.springbootdemo.service.TestIService;
-import com.xiexing.springbootdemo.util.RedisUtils;
+import com.xiexing.springbootdemo.util.*;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.awt.*;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @date: 2019/4/3 17:14
@@ -71,6 +73,38 @@ public class TestController {
         log.info("redisssssssssssssssssssssssssssssssssssssssssssssss");
         return "redis test success";
     }
+
+    @Test
+    public void sendTest() {
+//        System.out.println(HttpUtils.senPostParmaStr("http://www.baidu.com",""));
+        System.out.println(HttpUtils.senPost("http://www.baidu.com",""));
+        System.out.println("=========================================================================");
+        System.out.println(HttpUtils.sendPost("http://www.baidu.com",""));
+
+
+
+    }
+
+    @Test
+    public void dateTest() {
+        Date date = DateUtils.getCurrentDate();
+        System.out.println(DateUtils.getCurrentFormatDate("yyyy-MM"));
+        System.out.println(DateUtils.getMonthStr(date));
+
+        System.out.println(DateUtils.getYear());
+
+        User user = new User();
+        user.setUserId(1);
+        user.setUserName("tom");
+        user.setPassWord("tomcat");
+
+
+        String xml = XmlUtils.toXML(user);
+        System.out.println(xml);
+        System.out.println(XmlUtils.xmlToObject(xml, user.getClass()));
+
+    }
+
 
 
 }

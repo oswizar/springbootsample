@@ -37,11 +37,11 @@ public class TestController {
     public Map testInterfaceMybatis() {
         Map result = new HashMap();
         Map param = new HashMap();
-        param.put("instanceId","2E767A073E2216F9");
+        param.put("instanceId", "2E767A073E2216F9");
         List<AppAdvice> appAdvices = new ArrayList<>();
         appAdvices = testService.queryWfiAppAdvice(param);
-        log.info("查询数据库返回=================>{}",appAdvices.toString());
-        result.put("data",appAdvices);
+        log.info("查询数据库返回=================>{}", appAdvices.toString());
+        result.put("data", appAdvices);
         return result;
     }
 
@@ -51,8 +51,8 @@ public class TestController {
         Map result = new HashMap();
         Department department = new Department();
         department = testService.queryDepartment("1");
-        log.info("查询数据库返回=================>{}",department.toString());
-        result.put("data",department);
+        log.info("查询数据库返回=================>{}", department.toString());
+        result.put("data", department);
         return result;
     }
 
@@ -61,7 +61,7 @@ public class TestController {
     @RequestMapping("/test")
     public Map test() {
         Map result = new HashMap();
-        result.put("data","1111111111111111111111111111111");
+        result.put("data", "1111111111111111111111111111111");
         return result;
     }
 
@@ -69,7 +69,7 @@ public class TestController {
     @RequestMapping("/redisTest")
     public String redisTest() {
         String str = "redis test";
-        redisUtils.set("example",str);
+        redisUtils.set("example", str);
         log.info("redisssssssssssssssssssssssssssssssssssssssssssssss");
         return "redis test success";
     }
@@ -77,10 +77,9 @@ public class TestController {
     @Test
     public void sendTest() {
 //        System.out.println(HttpUtils.senPostParmaStr("http://www.baidu.com",""));
-        System.out.println(HttpUtils.senPost("http://www.baidu.com",""));
+        System.out.println(HttpUtils.senPost("http://www.baidu.com", ""));
         System.out.println("=========================================================================");
-        System.out.println(HttpUtils.sendPost("http://www.baidu.com",""));
-
+        System.out.println(HttpUtils.sendPost("http://www.baidu.com", ""));
 
 
     }
@@ -105,6 +104,17 @@ public class TestController {
 
     }
 
+    @Test
+    public void sftpTest() throws Exception {
+
+        SFTPUtils instance = SFTPUtils.getInstance("10.10.10.136", 2222, "abc", "abc", "", "");
+        System.out.println(instance);
+//        instance.uploadFile("/up", "D:\\", "redis.conf");
+//        instance.uploadFile("/upload/", "/example/", "D:\\","CACHE.log|redis.conf");
+
+//        System.out.println("helloworld".substring(2,5));
+        instance.downLoadFile("/upload/example/","redis.conf","d:\\sftp");
+    }
 
 
 }

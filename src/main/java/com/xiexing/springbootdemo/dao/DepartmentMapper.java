@@ -1,11 +1,7 @@
 package com.xiexing.springbootdemo.dao;
 
-import com.xiexing.springbootdemo.entity.AppAdvice;
 import com.xiexing.springbootdemo.entity.Department;
 import org.apache.ibatis.annotations.Mapper;
-
-import java.util.List;
-import java.util.Map;
 
 @Mapper
 public interface DepartmentMapper {

@@ -1,17 +1,23 @@
 package com.xiexing.springbootdemo.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.xiexing.springbootdemo.entity.AppAdvice;
 import com.xiexing.springbootdemo.entity.Department;
 import com.xiexing.springbootdemo.entity.Employee;
 import com.xiexing.springbootdemo.entity.User;
 import com.xiexing.springbootdemo.service.TestIService;
 import com.xiexing.springbootdemo.util.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 
 import java.awt.*;
 import java.util.*;
@@ -24,7 +30,12 @@ import java.util.List;
  */
 @Controller
 @Slf4j
+@Api(description = "测试控制器")
 public class TestController {
+
+    public static void main(String[] args) {
+        System.out.println();
+    }
 
     @Autowired
     private TestIService testService;
@@ -32,25 +43,28 @@ public class TestController {
     @Autowired
     private RedisUtils redisUtils;
 
+
+    @ApiOperation(value="创建图书", notes="图书相关信息")
+//    @ApiImplicitParam(name = "book", value = "图书详细实体", required = true, dataType = "Book")
     @ResponseBody
     @RequestMapping("/testInterfaceMybatis")
     public Map testInterfaceMybatis() {
         Map result = new HashMap();
-        Map param = new HashMap();
-        param.put("instanceId", "2E767A073E2216F9");
-        List<AppAdvice> appAdvices = new ArrayList<>();
-        appAdvices = testService.queryWfiAppAdvice(param);
-        log.info("查询数据库返回=================>{}", appAdvices.toString());
+//        Map param = new HashMap();
+//        param.put("instanceId", "2E767A073E2216F9");
+        Map appAdvices = testService.queryWfiAppAdvice();
+        log.info("查询数据库返回=================>{}", appAdvices);
         result.put("data", appAdvices);
         return result;
     }
 
+    @ApiOperation(value = "获取图书详细信息", notes = "根据url的id来获取详细信息")
+//    @ApiImplicitParam(name = "id", value = "ID", required = true, dataType = "Long", paramType = "path")
     @ResponseBody
-    @RequestMapping("/testDataSource")
+    @RequestMapping(value = "/testDataSource")
     public Map testDataSource() {
         Map result = new HashMap();
-        Department department = new Department();
-        department = testService.queryDepartment("1");
+        Department department = testService.queryDepartment("1");
         log.info("查询数据库返回=================>{}", department.toString());
         result.put("data", department);
         return result;
@@ -59,10 +73,12 @@ public class TestController {
 
     @ResponseBody
     @RequestMapping("/test")
-    public Map test() {
+    public String test() {
         Map result = new HashMap();
+        result.put("code","0000");
+        result.put("message","请求成功");
         result.put("data", "1111111111111111111111111111111");
-        return result;
+        return JSON.toJSONString(result);
     }
 
     @ResponseBody
@@ -114,6 +130,16 @@ public class TestController {
 
 //        System.out.println("helloworld".substring(2,5));
         instance.downLoadFile("/upload/example/","redis.conf","d:\\sftp");
+    }
+
+
+    @Test
+    public void md5Test() {
+        String md5String = Md5Utils.getMd5String("3857662@#%%9Od02Jd?//```d1");
+
+
+//        RestTemplate
+        System.out.println(md5String);
     }
 
 

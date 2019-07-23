@@ -29,8 +29,8 @@ public class TestServiceImpl implements TestIService {
 
     @TargetDataSource("ORACLE")
     @Override
-    public List<AppAdvice> queryWfiAppAdvice(Map param) {
-        List list = testMapper.queryWfiAppAdviceHistory(param);
+    public Map queryWfiAppAdvice() {
+        Map list = testMapper.queryWfiAppAdviceHistory();
         return list;
     }
 

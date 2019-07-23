@@ -9,6 +9,6 @@ import java.util.Map;
 @Mapper
 public interface TestMapper {
 
-    List<AppAdvice> queryWfiAppAdviceHistory(Map<String, Object> param);
+    Map queryWfiAppAdviceHistory();
 
 }

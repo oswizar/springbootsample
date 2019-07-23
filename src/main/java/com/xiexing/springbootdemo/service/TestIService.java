@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface TestIService {
 
-    List<AppAdvice> queryWfiAppAdvice(Map param);
+    Map queryWfiAppAdvice();
 
     Department queryDepartment(String id);
 }

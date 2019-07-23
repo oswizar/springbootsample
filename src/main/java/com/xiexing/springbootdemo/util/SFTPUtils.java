@@ -11,12 +11,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
 
-/**
- * sftp传输
- *
- * @author Luxin.xiao
- * @date 2018/8/21 14:49
- */
 public class SFTPUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(SFTPUtils.class);

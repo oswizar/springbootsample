@@ -68,58 +68,8 @@
   </sql>
 
 
-    <select id="queryWfiAppAdviceHistory" parameterType="java.util.Map" resultMap="BaseResultMap">
-        SELECT WFI_APP_ADVICE_ID,
-        APPR_OPT,
-        INV_DOC,
-        INV_OPT,
-        INV_REQ,
-        APP_CONCLUSION,
-        FRAUD_TYP,
-        FRAUD_KIND,
-        FRAUD_PART,
-        FRAUD_DEALER,
-        FRAUD_BLK,
-        REJECT_RSN,
-        APP_ADVICE,
-        APP_OUT_ADVICE,
-        APP_IN_ADVICE,
-        ASS_CAR_PRICE,
-        TAIL,
-        INTEND,
-        RELATION,
-        ADD_INFO,
-        OTHER,
-        WFI_INSTANCE_ID,
-        WFI_NODE_ID,
-        WFI_NODE_NAME,
-        WFI_SCENE_ID,
-        WFSIGN,
-        APP_USER,
-        APP_ORG,
-        OPERATE_TIME,
-        REMARK,
-        APP_SUPPLEMENT_ADVICE,
-        WFI_STATUS,
-        WFI_PRO_TYP,
-        WFI_NODE_SIGN,
-        WFI_NODE_SEQ,
-        APP_ORG_NAME,
-        GPS_COUNT,
-        APP_USER_NAME,
-        DEAL_USR,
-        CALL_RPT,
-        GUTR_OPT,
-        MAX_APPRV_AMT,
-        MAX_APPRV_TNR,
-        MIN_FST_PAY
-        from WFI_APP_ADVICE
-        where WFI_INSTANCE_ID = #{instanceId,jdbcType=VARCHAR}
-        <if test="nodeIds!=null">
-            AND WFI_NODE_ID IN
-            <foreach item="item" index="index" collection="nodeIds" open="(" separator="," close=")">#{item}</foreach>
-        </if>
-        ORDER BY OPERATE_TIME ASC
+    <select id="queryWfiAppAdviceHistory" resultType="map">
+        select to_char(sysdate,'yyyy-mm-dd hh24:mi:ss') AS TIME from dual
     </select>
 
 

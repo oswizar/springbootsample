@@ -11,6 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.ArrayUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -135,11 +136,19 @@ public class TestController {
 
     @Test
     public void md5Test() {
+
         String md5String = Md5Utils.getMd5String("3857662@#%%9Od02Jd?//```d1");
-
-
-//        RestTemplate
         System.out.println(md5String);
+        Integer[] sum = new Integer[]{1,2,3};
+
+        for(int i:sum){
+            System.out.println(i);
+
+        }
+
+        List list = Arrays.asList(sum);
+        list.forEach(o -> System.out.println(o));
+
     }
 
 

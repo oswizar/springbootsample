@@ -36,24 +36,11 @@ public class MyMvcConfig implements WebMvcConfigurer {
     }
 
 
+
     /**
-     * 注册拦截器
+     * 配置静态资源路径
      * @param registry
      */
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-//
-//        // 静态资源???(*.js,*.css)
-//        registry.addInterceptor(new LoginHandlerInteceptor()).addPathPatterns("/**")
-//                .excludePathPatterns("/index", "/index.html","/","/login","/logout"
-////                        ,"/static/**"
-//                        ,"/asserts/**"
-////                        ,"/asserts/js/**","/asserts/css/**","/asserts/img/**"
-//                        // webjars包配置
-//                ,"/webjars/**");
-////        super.addInterceptors(registry);
-    }
-
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         // 1.设置静态资源的访问路径,直接从项目的根路径进入,路径不用加以下的包名
@@ -66,6 +53,25 @@ public class MyMvcConfig implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/META-INF/resources/");
 //        super.addResourceHandlers(registry);
     }
+
+    /**
+     * 注册拦截器
+     * @param registry
+     */
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+
+        // 静态资源???(*.js,*.css)
+        registry.addInterceptor(new LoginHandlerInteceptor()).addPathPatterns("/**")
+                .excludePathPatterns("/index", "/index.html","/","/login","/logout"
+//                        ,"/static/**"
+                        ,"/asserts/**"
+                        // webjars包配置
+                ,"/webjars/**");
+//        super.addInterceptors(registry);
+    }
+
+
 
 
     /**

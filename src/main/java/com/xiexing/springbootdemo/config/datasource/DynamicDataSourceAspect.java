@@ -25,9 +25,9 @@ public class DynamicDataSourceAspect {
         try {
             dataSourceKey = targetDataSource.value();
             if (!DataSourceContextHolder.containsDataSource(dataSourceKey)) {
-                log.error("DataSource [{}] NotFound! Used Default DataSource >>> {}", targetDataSource.value(), point.getSignature());
+                log.error("DataSource [{}] NotFound! Used Default DataSource >>> [{}]", targetDataSource.value(), point.getSignature());
             } else {
-                log.info("Used DataSource : {} >>> {}", targetDataSource.value(), point.getSignature());
+                log.info("Used DataSource : [{}] || Invoke Method : [{}]", targetDataSource.value(), point.getSignature());
             }
         } catch (Exception e) {
             e.printStackTrace();

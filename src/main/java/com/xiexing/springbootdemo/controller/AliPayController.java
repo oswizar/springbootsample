@@ -7,14 +7,18 @@ import com.alipay.api.AlipayClient;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradeCloseRequest;
 import com.alipay.api.request.AlipayTradePagePayRequest;
+import com.alipay.api.request.AlipayTradePrecreateRequest;
 import com.alipay.api.request.AlipayTradeQueryRequest;
 import com.alipay.api.response.AlipayTradeCloseResponse;
 import com.alipay.api.response.AlipayTradePagePayResponse;
+import com.alipay.api.response.AlipayTradePrecreateResponse;
 import com.alipay.api.response.AlipayTradeQueryResponse;
 import com.xiexing.springbootdemo.config.AlipayConfig;
+import com.xiexing.springbootdemo.util.ZxingUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,12 +38,79 @@ public class AliPayController {
 //    private ExecutorService executorService = Executors.newFixedThreadPool(20);
 
 
-
     AlipayClient alipayClient = AlipayConfig.alipayClient;
 
+
+    @RequestMapping("/qrTest")
+    public ModelAndView qrTest() {
+        log.info("Invoke quTest >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        ModelAndView mv = new ModelAndView("success");
+        mv.addObject("qr","wwwwwwwwwwww");
+        return mv;
+    }
+
+
     /**
+     * 支付宝当面付
+     * @param outTradeNo
+     * @param httpResponse
+     * @throws Exception
+     */
+    @RequestMapping("/tradePrecreate/{outTradeNo}")
+    public void tradePrecreate(@PathVariable String outTradeNo,
+                               HttpServletResponse httpResponse) throws Exception {
+        AlipayTradePrecreateRequest request = new AlipayTradePrecreateRequest();
+
+        request.setReturnUrl(AlipayConfig.return_url);
+        request.setNotifyUrl(AlipayConfig.notify_url);
+
+        Map<String, String> param = new HashMap<>();
+        param.put("out_trade_no", outTradeNo);
+        param.put("product_code", "FACE_TO_FACE_PAYMENT");
+        param.put("total_amount", "88.88");
+        param.put("subject", "iPhone8 128G");
+        param.put("body", "iPhone8 128G");
+
+        /**
+         * 需要对请求的数据进行验证
+         * 1.一笔单子只能发起一次创建支付请求,
+         */
+
+        String bizContext = JSON.toJSONString(param);
+        log.info("请求支付宝支付接口参数为=[{}]", bizContext);
+        request.setBizContent(bizContext);
+
+        String form = "";
+        try {
+            //调用SDK生成表单
+            AlipayTradePrecreateResponse response = alipayClient.execute(request);
+            log.info("请求支付宝支付接口返回=[{}]", JSON.toJSONString(response));
+            if (response.isSuccess()) {
+                log.info("调用支付宝当面付接口成功:)");
+                String qrCode = response.getQrCode();
+                System.out.println("------qrCode-------" + qrCode);
+                // 需要修改为运行机器上的路径
+                String filePath = String.format("D:/tmp/qr- %s.png", response.getOutTradeNo());
+                //将生成的二维码存放到指定路径
+                ZxingUtils.getQRCodeImge(response.getQrCode(), 256, filePath);
+
+            }
+        } catch (AlipayApiException e) {
+            e.printStackTrace();
+        }
+        httpResponse.setContentType("text/html;charset=" + AlipayConfig.charset);
+        //直接将完整的表单html输出到页面
+        httpResponse.getWriter().write(form);
+        httpResponse.getWriter().flush();
+        httpResponse.getWriter().close();
+    }
+
+
+    /**
+     * 支付宝网站支付
      * 对接支付宝的创建订单和支付功能
      * 注意:只有用户通过扫一扫,或者登陆支付宝跳转到支付页面才算真正[创建交易],否则查询为[交易不存在]
+     *
      * @param httpResponse
      * @throws Exception
      */
@@ -51,12 +122,12 @@ public class AliPayController {
         request.setReturnUrl(AlipayConfig.return_url);
         request.setNotifyUrl(AlipayConfig.notify_url);
 
-        Map<String,String> param = new HashMap<>();
-        param.put("out_trade_no",outTradeNo);
-        param.put("product_code","FAST_INSTANT_TRADE_PAY");
-        param.put("total_amount","88.88");
-        param.put("subject","iPhone8 128G");
-        param.put("body","iPhone8 128G");
+        Map<String, String> param = new HashMap<>();
+        param.put("out_trade_no", outTradeNo);
+        param.put("product_code", "FAST_INSTANT_TRADE_PAY");
+        param.put("total_amount", "88.88");
+        param.put("subject", "iPhone8 128G");
+        param.put("body", "iPhone8 128G");
 
         /**
          * 需要对请求的数据进行验证
@@ -122,6 +193,7 @@ public class AliPayController {
     /**
      * 对接支付宝统一交易查询接口
      * 注意:只有用户通过扫一扫,或者登陆支付宝跳转到支付页面才算真正[创建交易],否则查询为[交易不存在]
+     *
      * @return
      * @throws AlipayApiException
      */
@@ -130,9 +202,9 @@ public class AliPayController {
     public String tradeQuery(@PathVariable String outTradeNo) throws AlipayApiException {
 
         AlipayTradeQueryRequest request = new AlipayTradeQueryRequest();
-        Map<String,String> param = new HashMap<>();
+        Map<String, String> param = new HashMap<>();
 
-        param.put("out_trade_no",outTradeNo);
+        param.put("out_trade_no", outTradeNo);
 
         String bizContext = JSON.toJSONString(param);
         log.info("请求支付宝统一交易查询接口参数=[{}]", bizContext);
@@ -197,9 +269,9 @@ public class AliPayController {
     public String tradeClose(String outTradeNo) throws AlipayApiException {
         AlipayTradeCloseRequest request = new AlipayTradeCloseRequest();
 
-        Map<String,String> param = new HashMap<>();
+        Map<String, String> param = new HashMap<>();
 
-        param.put("out_trade_no",outTradeNo);
+        param.put("out_trade_no", outTradeNo);
 
         String bizContext = JSON.toJSONString(param);
 
@@ -214,12 +286,6 @@ public class AliPayController {
             return "关闭失败!!!";
         }
     }
-
-
-
-
-
-
 
 
 //    /**
@@ -290,10 +356,9 @@ public class AliPayController {
 //    }
 
 
-
-
     /**
      * 支付宝服务器异步通知页面
+     *
      * @param request
      * @return
      * @throws AlipayApiException
@@ -318,6 +383,7 @@ public class AliPayController {
 
     /**
      * 支付宝服务器同步通知页面
+     *
      * @return
      * @throws AlipayApiException
      */
@@ -343,6 +409,7 @@ public class AliPayController {
 
     /**
      * 将request中的参数转换成Map
+     *
      * @param request
      * @return
      */

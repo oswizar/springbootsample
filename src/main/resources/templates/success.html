@@ -1,25 +1,41 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>成功页面</title>
+    <script type="text/javascript" src="asserts/js/jquery-3.2.1.slim.min.js"></script>
+    <script type="text/javascript" src="asserts/js/jquery.qrcode.js"></script>
+    <script type="text/javascript" src="asserts/js/qrcode.js"></script>
+
 </head>
+
 <body>
-<h3>
-    success!!!!!!
-</h3>
-
-<!--/*@thymesVar id="obj" type="ch"*/-->
-<p th:text="${obj}">
-    Welcome to thyemleaf!!!!!
-</p>
-
-<div th:text="${obj}">
-    Welcome to thyemleaf!!!!!
-</div>
 
 <div>
-    Welcome to thyemleaf!!!!!
+    <input type="text" id="qrVal" th:value="${qr}">缺省值</input>
 </div>
+
+
+<p>Render in table</p>
+
+<div id="qrcodeTable"></div>
+
 </body>
+
+<script type="text/javascript">
+    function show() {
+        var qr = $("#qrVal").val();
+        jQuery('#qrcodeTable').qrcode({
+            render: "table",            //二维码生成方式
+            text: qr,                   //二维码内容
+            width: "128",               //二维码的宽度
+            height: "128",              //二维码的高度
+        });
+    }
+</script>
+
+<script type="text/javascript">
+    $(document).ready(show());
+</script>
 </html>

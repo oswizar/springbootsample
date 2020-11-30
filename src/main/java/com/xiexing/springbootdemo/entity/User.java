@@ -7,10 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 
-@Slf4j
 @Data
-@ConfigurationProperties(prefix = "user")
-@Component
 public class User implements Serializable {
 
 

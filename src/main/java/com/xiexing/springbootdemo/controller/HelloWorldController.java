@@ -1,10 +1,3 @@
-/**
- * Copyright (C): 长安新生(深圳)金融投资有限公司
- * FileName: HelloWordController
- * Author:   xiexing
- * Date:     2018/12/18 15:53
- * Description: SpringBootDemo
- */
 package com.xiexing.springbootdemo.controller;
 
 import com.xiexing.springbootdemo.entity.User;
@@ -13,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -62,6 +56,15 @@ public class HelloWorldController {
     public String success(Map<String,Object> map) {
         map.put("obj","hello SpringBoot");
         return "success";
+    }
+
+    @ResponseBody
+    @RequestMapping("/helloString")
+    public Object helloString() {
+        Map<String,String> map = new HashMap<>();
+        map.put("1","111");
+        map.put("2","222");
+        return map;
     }
 
 

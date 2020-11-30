@@ -97,4 +97,37 @@ public class JsonUtils {
         }
     }
 
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//    import com.alibaba.fastjson.JSON;
+
+    public static void appendStruct(StringBuilder json,String structName,String value,boolean hasNext){
+        json.append("\"");
+        json.append(structName);
+        json.append("\":");
+        json.append(value);
+
+        if(hasNext){
+            json.append(",");
+        } else {
+            json.append("}");
+        }
+    }
+
+
+    public static void appendField(StringBuilder json,String fieldName,String value,boolean hasNext){
+        json.append("\"");
+        json.append(fieldName);
+        json.append("\":\"");
+        json.append(value);
+        json.append("\"");
+        if(hasNext){
+            json.append(",");
+        } else {
+            json.append("}");
+        }
+    }
+
+
 }

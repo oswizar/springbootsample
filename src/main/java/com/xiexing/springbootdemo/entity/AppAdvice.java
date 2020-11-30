@@ -5,13 +5,6 @@ import lombok.ToString;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-/**
- * @Description:审批轨迹javabean
- * @author: Wuhengzhen
- * @date:2017/11/6 13:25
- * @system name:新一代消费金融系统
- * @copyright:长安新生（深圳）金融投资有限公司
- */
 @ToString
 public class AppAdvice implements Serializable {
 

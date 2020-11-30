@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.xiexing.springbootdemo.dao.TestMapper">
+<mapper namespace="com.xiexing.springbootdemo.mapper.TestMapper">
     <resultMap id="BaseResultMap" type="com.xiexing.springbootdemo.entity.AppAdvice">
         <id column="WFI_APP_ADVICE_ID" property="wfiAppAdviceId" jdbcType="DECIMAL"/>
         <result column="APPR_OPT" property="apprOpt" jdbcType="VARCHAR"/>

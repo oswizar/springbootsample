@@ -1,15 +1,13 @@
 package com.xiexing.springbootdemo.service.impl;
 
 import com.xiexing.springbootdemo.config.datasource.TargetDataSource;
-import com.xiexing.springbootdemo.dao.DepartmentMapper;
-import com.xiexing.springbootdemo.dao.TestMapper;
-import com.xiexing.springbootdemo.entity.AppAdvice;
+import com.xiexing.springbootdemo.mapper.DepartmentMapper;
+import com.xiexing.springbootdemo.mapper.TestMapper;
 import com.xiexing.springbootdemo.entity.Department;
 import com.xiexing.springbootdemo.service.TestIService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Map;
 
 /**

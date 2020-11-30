@@ -7,6 +7,7 @@
  */
 package com.xiexing.springbootdemo.config;
 
+import com.xiexing.springbootdemo.component.AccessLimitInterceptor;
 import com.xiexing.springbootdemo.component.LoginHandlerInteceptor;
 import com.xiexing.springbootdemo.component.MyLocaleResolver;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +22,13 @@ import org.springframework.web.servlet.config.annotation.*;
 @Configuration
 public class MyMvcConfig implements WebMvcConfigurer {
 //public class MyMvcConfig extends WebMvcConfigurationSupport {
+
+
+
+    @Bean
+    AccessLimitInterceptor getAccessLimitInterceptor() {
+        return new AccessLimitInterceptor();
+    }
 
     /**
      * 配置项目启动页面
@@ -68,6 +76,8 @@ public class MyMvcConfig implements WebMvcConfigurer {
                         ,"/asserts/**"
                         // webjars包配置
                 ,"/webjars/**");
+
+        registry.addInterceptor(getAccessLimitInterceptor()).addPathPatterns("/**");
 //        super.addInterceptors(registry);
     }
 

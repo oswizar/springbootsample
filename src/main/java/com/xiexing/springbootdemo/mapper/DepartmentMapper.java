@@ -1,9 +1,7 @@
-package com.xiexing.springbootdemo.dao;
+package com.xiexing.springbootdemo.mapper;
 
 import com.xiexing.springbootdemo.entity.Department;
-import org.apache.ibatis.annotations.Mapper;
 
-@Mapper
 public interface DepartmentMapper {
 
 

@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author oswizar
@@ -36,5 +36,7 @@ public class Book implements Serializable {
     private Integer authorId;
 
     private Author author;
+
+    private float priceMax;
 
 }

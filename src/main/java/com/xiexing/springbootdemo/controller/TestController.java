@@ -8,21 +8,25 @@ import com.xiexing.springbootdemo.service.TestIService;
 import com.xiexing.springbootdemo.util.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import jdk.internal.org.objectweb.asm.tree.TryCatchBlockNode;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.RequestEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import springfox.documentation.service.ResponseMessage;
 
 import javax.servlet.http.HttpServletRequest;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.concurrent.Semaphore;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @date: 2019/4/3 17:14
@@ -31,8 +35,11 @@ import java.util.concurrent.TimeUnit;
  */
 @Controller
 @Slf4j
-@Api(description = "测试控制器")
+@Api(value = "测试控制器")
 public class TestController {
+
+//    @Autowired
+    private final RestTemplate restTemplate = new RestTemplate() ;
 
 //    public static void main(String[] args) {
 //        System.out.println();
@@ -40,9 +47,6 @@ public class TestController {
 
     @Autowired
     private TestIService testService;
-
-    @Autowired
-    private RestTemplate restTemplate;
 
     @Autowired
     private RedisUtils redisUtils;
@@ -143,7 +147,7 @@ public class TestController {
         User user = new User();
         user.setUserId(1);
         user.setUserName("tom");
-        user.setPassWord("tomcat");
+        user.setPassword("tomcat");
 
         redisUtils.hmset("admin", map);
         redisUtils.hset("userObject", "user",user);
@@ -174,7 +178,7 @@ public class TestController {
         User user = new User();
         user.setUserId(1);
         user.setUserName("tom");
-        user.setPassWord("tomcat");
+        user.setPassword("tomcat");
 
 
         String xml = XmlUtils.toXML(user);
@@ -257,14 +261,38 @@ public class TestController {
         variable.put("d","20201118");
         variable.put("apikey","123456");
         variable.put("type","6");
-//        Object result = restTemplate.getForObject(url,Object.class,variable);
-        Object result = HttpUtils.sendGet(url,variable);
+        Object result = restTemplate.getForObject(url,Object.class,variable);
+//        Object result = HttpUtils.sendGet(url,variable);
         System.out.println(result);
 //        Object result = HttpUtils.sendGet(url,variable);
         JSONObject jsonObject = JSONObject.parseObject((String) result);
         System.out.println(jsonObject);
         return result;
 
+    }
+
+    @PostMapping("/match")
+    @ResponseBody
+    public Object match() {
+
+        MultiValueMap<String, Object> postParameters  = new LinkedMultiValueMap<>();
+        postParameters .add("user_id", 1);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/x-www-form-urlencoded");
+
+        HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<>(postParameters, headers);
+
+        List<Integer> object = (List<Integer>) restTemplate.postForObject("http://10.114.10.144:8080/api/model/i_match",
+                httpEntity, Object.class);
+
+        System.out.println(object);
+        object.add(111111111);
+        object.add(222222222);
+        object.add(null);
+        object.add(null);
+
+        return object;
     }
 
 

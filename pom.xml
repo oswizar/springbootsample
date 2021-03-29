@@ -361,6 +361,10 @@
 
     <!--这个插件可以把项目打包成可执行的jar-->
     <build>
+
+        <!--重命名spring-boot-maven-plugin插件打包后生成的包名-->
+        <finalName>springbootdemo</finalName>
+
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

@@ -6,6 +6,7 @@ import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -21,6 +22,7 @@ public final class RedisUtils {
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
+
     // =============================common============================
 
     /**
@@ -74,6 +76,7 @@ public final class RedisUtils {
      */
     @SuppressWarnings("unchecked")
     public void del(String... key) {
+        System.out.println("del keys: " + Arrays.toString(key));
         if (key != null && key.length > 0) {
             if (key.length == 1) {
                 redisTemplate.delete(key[0]);
@@ -82,7 +85,8 @@ public final class RedisUtils {
             }
         }
     }
-    // ============================String=============================
+
+    // ============================string=============================
 
     /**
      * 普通缓存获取
@@ -160,7 +164,7 @@ public final class RedisUtils {
     }
 
 
-    // ================================Map=================================
+    // ================================hash=================================
 
     /**
      * HashGet
@@ -459,9 +463,25 @@ public final class RedisUtils {
      * @param key   键
      * @param value 值
      */
-    public boolean lSet(String key, Object value) {
+    public boolean lrSetSingle(String key, Object value) {
         try {
             redisTemplate.opsForList().rightPush(key, value);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * 将list放入缓存
+     *
+     * @param key   键
+     * @param value 值
+     */
+    public boolean llSetSingle(String key, Object value) {
+        try {
+            redisTemplate.opsForList().leftPush(key, value);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -568,39 +588,39 @@ public final class RedisUtils {
     /**
      * 设置zset值
      */
-    public boolean addZSetValue(String key, Object member, long score){
+    public boolean addZSetValue(String key, Object member, long score) {
         return redisTemplate.opsForZSet().add(key, member, score);
     }
 
     /**
      * 设置zset值
      */
-    public boolean addZSetValue(String key, Object member, double score){
+    public boolean addZSetValue(String key, Object member, double score) {
         return redisTemplate.opsForZSet().add(key, member, score);
     }
 
     /**
      * 批量设置zset值
      */
-    public long addBatchZSetValue(String key, Set<ZSetOperations.TypedTuple<Object>> tuples){
+    public long addBatchZSetValue(String key, Set<ZSetOperations.TypedTuple<Object>> tuples) {
         return redisTemplate.opsForZSet().add(key, tuples);
     }
 
     /**
      * 自增zset值
      */
-    public void incZSetValue(String key, String member, long delta){
+    public void incZSetValue(String key, String member, long delta) {
         redisTemplate.opsForZSet().incrementScore(key, member, delta);
     }
 
     /**
      * 获取zset数量
      */
-    public long getZSetScore(String key, String member){
+    public long getZSetScore(String key, String member) {
         Double score = redisTemplate.opsForZSet().score(key, member);
-        if(score==null){
+        if (score == null) {
             return 0;
-        }else{
+        } else {
             return score.longValue();
         }
     }
@@ -608,7 +628,7 @@ public final class RedisUtils {
     /**
      * 获取有序集 key 中成员 member 的排名 。其中有序集成员按 score 值递减 (从小到大) 排序。
      */
-    public Set<ZSetOperations.TypedTuple<Object>> getZSetRank(String key, long start, long end){
+    public Set<ZSetOperations.TypedTuple<Object>> getZSetRank(String key, long start, long end) {
         return redisTemplate.opsForZSet().rangeWithScores(key, start, end);
     }
 

@@ -1,7 +1,6 @@
 package com.xiexing.springbootdemo.service.impl;
 
 
-import com.sun.xml.internal.messaging.saaj.packaging.mime.internet.MimeUtility;
 import com.xiexing.springbootdemo.service.IMailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeUtility;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.List;

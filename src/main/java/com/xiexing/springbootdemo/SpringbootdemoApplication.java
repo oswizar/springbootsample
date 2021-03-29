@@ -14,7 +14,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 public class SpringbootdemoApplication {
 
-
 //	@Bean
 //	public RestTemplate createHttpsRestTemplate() {
 //		return new RestTemplate();
@@ -22,12 +21,10 @@ public class SpringbootdemoApplication {
 
 	public static void main(String[] args) {
 
-//		System.setProperty("mail.mime.splitlongparameters", "false");
-
+		// 防止邮件中附件由于文件名称过长出现乱码
 		System.getProperties().setProperty("mail.mime.splitlongparameters", "false");
 
 		SpringApplication.run(SpringbootdemoApplication.class, args);
-		log.info("Service Started Successfully");
 	}
 }
 

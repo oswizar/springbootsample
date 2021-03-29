@@ -117,4 +117,10 @@ public class EmployeeController {
         return "redirect:/emps";
     }
 
+    @PostMapping("/submit")
+    @ResponseBody
+    public String submit() {
+        return "123";
+    }
+
 }

@@ -28,9 +28,11 @@ public class SendMailController {
     public Object sendSimpleMail() {
 
         SimpleMailMessage message = new SimpleMailMessage();
+//        String to = "xing.xie1@pactera.com";
         String to = "656806549@qq.com";
-        String subject = "今晚要加班，不用等我了";
-        String context = "<html><head></head><body><h3>哈哈，什么都没有</h3></body></html>";
+        String subject = "邮件发送测试";
+//        String context = "<html><head></head><body><h3>哈哈，什么都没有</h3></body></html>";
+        String context = "哈哈，什么都没有~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
 
         mailService.sendSimpleMail(to,subject,context);
 
@@ -72,9 +74,9 @@ public class SendMailController {
 
 
         SimpleMailMessage message = new SimpleMailMessage();
-//        String to = "656806549@qq.com";
+        String to = "656806549@qq.com";
 //        String to = "oswizar@icloud.com";
-        String to = "oswizar@outlook.com";
+//        String to = "oswizar@outlook.com";
 //        String to = "oswizar@gmail.com";
         String subject = "速度测试：这是有附件的邮件，记得接受文件";
 

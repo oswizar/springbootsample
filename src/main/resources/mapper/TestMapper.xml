@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.xiexing.springbootdemo.mapper.TestMapper">
-    <resultMap id="BaseResultMap" type="com.xiexing.springbootdemo.entity.AppAdvice">
+<mapper namespace="com.oswizar.springbootsample.mapper.TestMapper">
+    <resultMap id="BaseResultMap" type="com.oswizar.springbootsample.entity.AppAdvice">
         <id column="WFI_APP_ADVICE_ID" property="wfiAppAdviceId" jdbcType="DECIMAL"/>
         <result column="APPR_OPT" property="apprOpt" jdbcType="VARCHAR"/>
         <result column="INV_DOC" property="invDoc" jdbcType="VARCHAR"/>
@@ -58,12 +58,12 @@
         <result column="BCH_DESC" property="bchDesc" jdbcType="VARCHAR" />
     </resultMap>
     <sql id="Base_Column_List">
-    WFI_APP_ADVICE_ID, APPR_OPT, INV_DOC, INV_OPT, INV_REQ, APP_CONCLUSION, FRAUD_TYP, 
-    FRAUD_KIND, FRAUD_PART, FRAUD_DEALER, FRAUD_BLK, REJECT_RSN, APP_ADVICE, APP_OUT_ADVICE, 
-    APP_IN_ADVICE, WFI_INSTANCE_ID, WFI_NODE_ID, WFI_NODE_NAME, WFI_SCENE_ID, WFSIGN, 
-    APP_USER, APP_ORG, OPERATE_TIME, REMARK, WFI_STATUS, WFI_PRO_TYP, WFI_NODE_SIGN, 
-    WFI_NODE_SEQ, APP_ORG_NAME, APP_USER_NAME, DEAL_USR, CALL_RPT, GUTR_OPT, MAX_APPRV_AMT, 
-    MAX_APPRV_TNR, MIN_FST_PAY, DAYBOOK_IND, IS_CHEAT, UNIT_RSN, ASS_CAR_PRICE, TAIL, 
+    WFI_APP_ADVICE_ID, APPR_OPT, INV_DOC, INV_OPT, INV_REQ, APP_CONCLUSION, FRAUD_TYP,
+    FRAUD_KIND, FRAUD_PART, FRAUD_DEALER, FRAUD_BLK, REJECT_RSN, APP_ADVICE, APP_OUT_ADVICE,
+    APP_IN_ADVICE, WFI_INSTANCE_ID, WFI_NODE_ID, WFI_NODE_NAME, WFI_SCENE_ID, WFSIGN,
+    APP_USER, APP_ORG, OPERATE_TIME, REMARK, WFI_STATUS, WFI_PRO_TYP, WFI_NODE_SIGN,
+    WFI_NODE_SEQ, APP_ORG_NAME, APP_USER_NAME, DEAL_USR, CALL_RPT, GUTR_OPT, MAX_APPRV_AMT,
+    MAX_APPRV_TNR, MIN_FST_PAY, DAYBOOK_IND, IS_CHEAT, UNIT_RSN, ASS_CAR_PRICE, TAIL,
     INTEND, RELATION, ADD_INFO, OTHER, APP_SUPPLEMENT_ADVICE, GPS_COUNT
   </sql>
 

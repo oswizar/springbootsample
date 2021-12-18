@@ -10,11 +10,11 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.xiexing</groupId>
-    <artifactId>springbootdemo</artifactId>
+    <groupId>com.oswizar</groupId>
+    <artifactId>springbootsample</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>springbootdemo</name>
-    <description>Demo project for Spring Boot</description>
+    <name>springbootsample</name>
+    <description>Sample project for Spring Boot</description>
 
 
     <distributionManagement>
@@ -363,7 +363,7 @@
     <build>
 
         <!--重命名spring-boot-maven-plugin插件打包后生成的包名-->
-        <finalName>springbootdemo</finalName>
+        <finalName>springbootsample</finalName>
 
         <plugins>
             <plugin>

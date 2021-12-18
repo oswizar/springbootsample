@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xiexing.springbootdemo.mapper.AuthorMapper">
+<mapper namespace="com.oswizar.springbootsample.mapper.AuthorMapper">
 
 
 
 <!--method1-->
-    <resultMap id="authorResultMap" type="com.xiexing.springbootdemo.entity.Author">
+    <resultMap id="authorResultMap" type="com.oswizar.springbootsample.entity.Author">
         <id property="id" column="id"/>
         <result property="name" column="name" />
         <result property="age" column="age" />
         <!--使用collection属性，ofType为集合内元素的类型-->
-        <collection property="bookList" ofType="com.xiexing.springbootdemo.entity.Book" columnPrefix="book_">
+        <collection property="bookList" ofType="com.oswizar.springbootsample.entity.Book" columnPrefix="book_">
             <id property="id" column="id"/>
             <result property="name" column="name" />
             <result property="price" column="price" />
@@ -26,7 +26,7 @@
 
 
 <!--method2-->
-<!--    <resultMap id="authorResultMap" type="com.xiexing.springbootdemo.entity.Author">-->
+<!--    <resultMap id="authorResultMap" type="Author">-->
 <!--        <id property="id" column="id"/>-->
 <!--        <result property="name" column="name" />-->
 <!--        <result property="age" column="age" />-->
@@ -34,7 +34,7 @@
 <!--        <collection property="bookList" resultMap="bookResultMap"/>-->
 <!--    </resultMap>-->
 
-<!--    <resultMap id="bookResultMap" type="com.xiexing.springbootdemo.entity.Book">-->
+<!--    <resultMap id="bookResultMap" type="Book">-->
 <!--        <id property="id" column="book_id"/>-->
 <!--        <result property="name" column="book_name" />-->
 <!--        <result property="price" column="book_price" />-->
@@ -50,13 +50,13 @@
 
 
 <!--method2-->
-<!--    <resultMap id="authorResultMap" type="com.xiexing.springbootdemo.entity.Author">-->
+<!--    <resultMap id="authorResultMap" type="Author">-->
 <!--        <id property="id" column="id"/>-->
 <!--        <result property="name" column="name" />-->
 <!--        <result property="age" column="age" />-->
 <!--        &lt;!&ndash;使用collection属性，ofType为集合内元素的类型&ndash;&gt;-->
-<!--        <collection property="bookList" ofType="com.xiexing.springbootdemo.entity.Book"  column="id"-->
-<!--                    select="com.xiexing.springbootdemo.mapper.BookMapper.findBookByAuthorId"/>-->
+<!--        <collection property="bookList" ofType="Book"  column="id"-->
+<!--                    select="BookMapper.findBookByAuthorId"/>-->
 <!--    </resultMap>-->
 
 <!--    <select id="findAuthorById" parameterType="int" resultMap="authorResultMap">-->
@@ -68,7 +68,7 @@
 
 
     <!--新增了author表的查询语句，将会被调用获取结果并组装给book-->
-    <select id="findById" parameterType="int" resultType="com.xiexing.springbootdemo.entity.Author">
+    <select id="findById" parameterType="int" resultType="com.oswizar.springbootsample.entity.Author">
         SELECT *
         FROM t_author
         WHERE id = #{id}

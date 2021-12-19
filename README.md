@@ -1,2 +1,1 @@
-# springbootdemo
-springbootdemo
+# springbootsample

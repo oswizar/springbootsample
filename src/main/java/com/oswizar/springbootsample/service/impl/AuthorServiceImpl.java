@@ -5,6 +5,7 @@ import com.oswizar.springbootsample.entity.Author;
 import com.oswizar.springbootsample.mapper.AuthorMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**

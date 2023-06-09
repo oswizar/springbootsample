@@ -1,6 +1,7 @@
 package com.oswizar.springbootsample.service;
 
-import javax.mail.MessagingException;
+import jakarta.mail.MessagingException;
+
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 

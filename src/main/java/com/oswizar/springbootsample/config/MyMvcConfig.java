@@ -1,13 +1,5 @@
-/**
- * Copyright (C): 长安新生(深圳)金融投资有限公司
- * FileName: MvcConfig
- * Author:   oswizar
- * Date:     2019/3/7 15:29
- * Description:
- */
 package com.oswizar.springbootsample.config;
 
-import com.oswizar.springbootsample.component.AccessLimitInterceptor;
 import com.oswizar.springbootsample.component.LoginHandlerInteceptor;
 import com.oswizar.springbootsample.component.MyLocaleResolver;
 import org.springframework.context.annotation.Bean;
@@ -22,13 +14,6 @@ import org.springframework.web.servlet.config.annotation.*;
 @Configuration
 public class MyMvcConfig implements WebMvcConfigurer {
 //public class MyMvcConfig extends WebMvcConfigurationSupport {
-
-
-
-    @Bean
-    AccessLimitInterceptor getAccessLimitInterceptor() {
-        return new AccessLimitInterceptor();
-    }
 
     /**
      * 配置项目启动页面
@@ -76,8 +61,6 @@ public class MyMvcConfig implements WebMvcConfigurer {
                         ,"/asserts/**"
                         // webjars包配置
                 ,"/webjars/**");
-
-        registry.addInterceptor(getAccessLimitInterceptor()).addPathPatterns("/**");
 //        super.addInterceptors(registry);
     }
 

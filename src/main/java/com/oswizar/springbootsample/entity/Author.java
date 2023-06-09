@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import java.util.List;
 
-import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -21,7 +20,6 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @TableName("t_author")
-@ApiModel(value="Author对象", description="")
 public class Author implements Serializable {
 
     private static final long serialVersionUID=1L;

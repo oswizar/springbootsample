@@ -2,12 +2,12 @@ package com.oswizar.springbootsample.controller;
 
 import com.oswizar.springbootsample.entity.User;
 import com.oswizar.springbootsample.util.ZxingUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;

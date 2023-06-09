@@ -9,18 +9,14 @@ package com.oswizar.springbootsample.entity;
 
 import org.springframework.format.annotation.NumberFormat;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 public class Employee {
 
     private Integer id;
 
-    @NotEmpty
     private String lastName;
 
-    @Email
     private String email;
 
     @NumberFormat(pattern = "#,###,###.#")

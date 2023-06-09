@@ -3,11 +3,11 @@ package com.oswizar.springbootsample.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.oswizar.springbootsample.entity.Department;
+import com.oswizar.springbootsample.entity.OOM;
 import com.oswizar.springbootsample.entity.User;
 import com.oswizar.springbootsample.service.TestIService;
 import com.oswizar.springbootsample.util.*;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
@@ -29,7 +28,6 @@ import java.util.*;
  */
 @Controller
 @Slf4j
-@Api(value = "测试控制器")
 public class TestController {
 
 //    @Autowired
@@ -63,7 +61,6 @@ public class TestController {
     }
 
 
-    @ApiOperation(value = "创建图书", notes = "图书相关信息")
 //    @ApiImplicitParam(name = "book", value = "图书详细实体", required = true, dataType = "Book")
     @ResponseBody
     @RequestMapping("/testInterfaceMybatis")
@@ -77,7 +74,6 @@ public class TestController {
         return result;
     }
 
-    @ApiOperation(value = "获取图书详细信息", notes = "根据url的id来获取详细信息")
 //    @ApiImplicitParam(name = "id", value = "ID", required = true, dataType = "Long", paramType = "path")
     @ResponseBody
     @RequestMapping(value = "/testDataSource")
@@ -156,71 +152,11 @@ public class TestController {
 
         RedisUtils.hmset("admin", map);
         RedisUtils.hset("userObject", "user",user);
-        RedisUtils.hmset("slave", JacksonUtils.jsonToMap(JsonUtils.obj2Json(user)));
 
         return "success";
     }
 
 
-    @Test
-    public void sendTest() {
-//        System.out.println(HttpUtils.senPostParmaStr("http://www.baidu.com",""));
-        System.out.println(HttpUtils.senPost("http://www.baidu.com", ""));
-        System.out.println("=========================================================================");
-        System.out.println(HttpUtils.sendPost("http://www.baidu.com", ""));
-
-
-    }
-
-    @Test
-    public void dateTest() {
-        Date date = DateUtils.getCurrentDate();
-        System.out.println(DateUtils.getCurrentFormatDate("yyyy-MM"));
-        System.out.println(DateUtils.getMonthStr(date));
-
-        System.out.println(DateUtils.getYear());
-
-        User user = new User();
-        user.setUserId(1);
-        user.setUserName("tom");
-        user.setPassword("tomcat");
-
-
-        String xml = XmlUtils.toXML(user);
-        System.out.println(xml);
-        System.out.println(XmlUtils.xmlToObject(xml, user.getClass()));
-
-    }
-
-    @Test
-    public void sftpTest() throws Exception {
-
-        SFTPUtils instance = SFTPUtils.getInstance("10.10.10.136", 2222, "abc", "abc", "", "");
-        System.out.println(instance);
-//        instance.uploadFile("/up", "D:\\", "redis.conf");
-//        instance.uploadFile("/upload/", "/example/", "D:\\","CACHE.log|redis.conf");
-
-//        System.out.println("helloworld".substring(2,5));
-        instance.downLoadFile("/upload/example/", "redis.conf", "d:\\sftp");
-    }
-
-
-    @Test
-    public void md5Test() {
-
-        String md5String = Md5Utils.getMd5String("3857662@#%%9Od02Jd?//```d1");
-        System.out.println(md5String);
-        Integer[] sum = new Integer[]{1, 2, 3};
-
-        for (int i : sum) {
-            System.out.println(i);
-
-        }
-
-        List list = Arrays.asList(sum);
-        list.forEach(o -> System.out.println(o));
-
-    }
 
 
     @ResponseBody
@@ -230,7 +166,6 @@ public class TestController {
         System.out.println(request.getContextPath());
         System.out.println(request.getServletPath());
         System.out.println(request.getRequestURI());
-        System.out.println(request.getRealPath("/"));
         System.out.println("-----进入getOrder方法------");
         return "111111111111111";
     }
@@ -310,6 +245,16 @@ public class TestController {
         params.put("userId", "2911");
         Map<String, Object> stringObjectMap = testService.operationLog(params, list);
         return stringObjectMap;
+    }
+
+    @GetMapping("/testOOM")
+    @ResponseBody
+    public Object testOOM() {
+        List<OOM> list = new ArrayList<>();
+        for (int i = 0; i < 1000; i++) {
+            list.add(new OOM());
+        }
+        return "end";
     }
 
 

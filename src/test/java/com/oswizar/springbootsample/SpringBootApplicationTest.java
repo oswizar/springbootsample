@@ -2,6 +2,7 @@ package com.oswizar.springbootsample;
 
 import com.oswizar.springbootsample.controller.HelloWorldController;
 import com.oswizar.springbootsample.entity.User;
+import com.oswizar.springbootsample.util.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,6 +20,9 @@ import javax.sql.DataSource;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -100,6 +104,67 @@ public class SpringBootApplicationTest {
         } else {
             System.out.println("失败");
         }
+    }
+
+
+    @Test
+    public void sendTest() {
+//        System.out.println(HttpUtils.senPostParmaStr("http://www.baidu.com",""));
+        System.out.println(HttpUtils.senPost("http://www.baidu.com", ""));
+        System.out.println("=========================================================================");
+        System.out.println(HttpUtils.sendPost("http://www.baidu.com", ""));
+
+
+    }
+
+    @Test
+    public void dateTest() {
+        Date date = DateUtils.getCurrentDate();
+        System.out.println(DateUtils.getCurrentFormatDate("yyyy-MM"));
+        System.out.println(DateUtils.getMonthStr(date));
+
+        System.out.println(DateUtils.getYear());
+
+        User user = new User();
+        user.setUserId(1);
+        user.setUserName("tom");
+        user.setPassword("tomcat");
+
+
+        String xml = XmlUtils.toXML(user);
+        System.out.println(xml);
+        System.out.println(XmlUtils.xmlToObject(xml, user.getClass()));
+
+    }
+
+    @Test
+    public void sftpTest() throws Exception {
+
+        SFTPUtils instance = SFTPUtils.getInstance("10.10.10.136", 2222, "abc", "abc", "", "");
+        System.out.println(instance);
+//        instance.uploadFile("/up", "D:\\", "redis.conf");
+//        instance.uploadFile("/upload/", "/example/", "D:\\","CACHE.log|redis.conf");
+
+//        System.out.println("helloworld".substring(2,5));
+        instance.downLoadFile("/upload/example/", "redis.conf", "d:\\sftp");
+    }
+
+
+    @Test
+    public void md5Test() {
+
+        String md5String = Md5Utils.getMd5String("3857662@#%%9Od02Jd?//```d1");
+        System.out.println(md5String);
+        Integer[] sum = new Integer[]{1, 2, 3};
+
+        for (int i : sum) {
+            System.out.println(i);
+
+        }
+
+        List list = Arrays.asList(sum);
+        list.forEach(o -> System.out.println(o));
+
     }
 
 

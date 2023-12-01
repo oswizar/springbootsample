@@ -1,69 +1,32 @@
 package com.oswizar.springbootsample.controller;
 
-import com.oswizar.springbootsample.entity.User;
 import com.oswizar.springbootsample.util.ZxingUtils;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-@Controller
+@RestController
 @Slf4j
 public class HelloWorldController {
 
-    @Value("${spring.dubbo.registry.address}")
-    private String zkAddr;
-
-    User user1 = new User();
-    User user2 = new User();
-
-    @ResponseBody
-    @RequestMapping("/hello")
-    public String index(@RequestBody Map dm) {
-
-        System.out.println(dm);
-
-        String hello = "Hello World";
-//        List list = new ArrayList();
-        user1.setUserId(Integer.parseInt("1"));
-        user1.setUserName("小明1");
-        user1.setPassword("sdfjowhfowhfohf");
-
-//        user2.setUserid(Integer.parseInt("2"));
-//        user2.setUserName("小明2");
-//        user2.setPassWord("sdfjowhfowhfohf");
-
-//        list.add(user1);
-//        list.add(user2);
-
-        System.out.println(user1);
-        System.out.println(zkAddr);
-        return hello;
+    @RequestMapping("/index")
+    public String index() {
+        return "Hello World";
     }
 
-
-//    @RequestMapping("/login")
-//    @ResponseBody
-//    public User login(User user) {
-//
-//
-//        return user;
-//    }
-
+    @PreAuthorize("hasAuthority({'admin'})")
     @RequestMapping("/success")
-//    @GetMapping("/success")
-//    @PostMapping("/success")
     public String success(Map<String,Object> map) {
         map.put("obj","hello SpringBoot");
         return "success";
     }
 
-    @ResponseBody
     @RequestMapping("/helloString")
     public Object helloString() {
         Map<String,String> map = new HashMap<>();
@@ -72,21 +35,19 @@ public class HelloWorldController {
         return map;
     }
 
-
-    @ResponseBody
     @RequestMapping("/generateQRCode")
     public Object generateQRCode(HttpServletRequest request) {
-        String url = request.getParameter("url");
-        System.out.println(url);
+        String contents = request.getParameter("contents");
+        Map<String, Object> res = new HashMap<>();
         try{
-            File qrCodeImge = ZxingUtils.getQRCodeImge(url, 128, "D:/test/test.jpeg");
-            System.out.println(qrCodeImge);
+            File qrCodeImage = ZxingUtils.getQRCodeImage(contents, 128, "/Users/oswizar/Temp/test.jpeg");
+            System.out.println(qrCodeImage);
+            res.put("msg", "生成二维码成功");
         } catch (Exception e) {
+            res.put("msg", "生成二维码失败");
+            res.put("desc", e.getMessage());
             e.printStackTrace();
-            log.info("生成推荐二维码失败");
         }
-        return "生成成功";
+        return res;
     }
-
-
 }

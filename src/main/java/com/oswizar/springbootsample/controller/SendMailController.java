@@ -1,14 +1,13 @@
 package com.oswizar.springbootsample.controller;
 
 import com.oswizar.springbootsample.service.IMailService;
-import jakarta.mail.MessagingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.UnsupportedEncodingException;
+import javax.mail.MessagingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,10 +63,9 @@ public class SendMailController {
     /**
      * 发送带有附件的邮件
      * @return
-     * @throws MessagingException
      */
     @PostMapping("/sendAttachmentsMail")
-    public Object sendAttachmentsMail() throws UnsupportedEncodingException, MessagingException {
+    public Object sendAttachmentsMail() throws Exception {
 
 
 

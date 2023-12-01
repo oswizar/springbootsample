@@ -3,6 +3,7 @@ package com.oswizar.springbootsample.util;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import org.slf4j.Logger;
@@ -48,28 +49,19 @@ public class ZxingUtils {
 
     /** 将内容contents生成长宽均为width的图片，图片路径由imgPath指定
      */
-    public static File getQRCodeImge(String contents, int width, String imgPath) {
-        return getQRCodeImge(contents, width, width, imgPath);
+    public static File getQRCodeImage(String contents, int width, String imgPath) throws IOException, WriterException {
+        return getQRCodeImage(contents, width, width, imgPath);
     }
 
     /** 将内容contents生成长为width，宽为width的图片，图片路径由imgPath指定
      */
-    public static File getQRCodeImge(String contents, int width, int height, String imgPath) {
-        try {
-            Map<EncodeHintType, Object> hints = new Hashtable<EncodeHintType, Object>();
+    public static File getQRCodeImage(String contents, int width, int height, String imgPath) throws WriterException, IOException {
+            Map<EncodeHintType, Object> hints = new Hashtable<>();
             hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.M);
             hints.put(EncodeHintType.CHARACTER_SET, "UTF8");
-
             BitMatrix bitMatrix = new MultiFormatWriter().encode(contents, BarcodeFormat.QR_CODE, width, height, hints);
-
             File imageFile = new File(imgPath);
             writeToFile(bitMatrix, "png", imageFile);
-
             return imageFile;
-
-        } catch (Exception e) {
-            log.error("create QR code error!", e);
-            return null;
-        }
     }
 }

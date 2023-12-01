@@ -311,7 +311,7 @@ public class Md5Utils {
      */
 
     public Md5Utils(String input, String enc) {
-        byte bytes[] = null;
+        byte[] bytes = null;
         try {
             bytes = input.getBytes(enc);
         } catch (UnsupportedEncodingException e) {

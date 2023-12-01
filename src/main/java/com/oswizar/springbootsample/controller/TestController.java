@@ -1,52 +1,25 @@
 package com.oswizar.springbootsample.controller;
 
+import cn.hutool.core.util.IdUtil;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.oswizar.springbootsample.entity.Department;
 import com.oswizar.springbootsample.entity.OOM;
 import com.oswizar.springbootsample.entity.User;
 import com.oswizar.springbootsample.service.TestIService;
 import com.oswizar.springbootsample.util.*;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.stereotype.Controller;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
-/**
- * @date: 2019/4/3 17:14
- * @author: oswizar
- * @description:
- */
-@Controller
+@RestController
 @Slf4j
 public class TestController {
-
-//    @Autowired
-    private final RestTemplate restTemplate = new RestTemplate() ;
-
-//    public static void main(String[] args) {
-//        System.out.println();
-//    }
 
     @Autowired
     private TestIService testService;
 
-//
-//    @Autowired
-//    public void setRestTemplate(RestTemplate restTemplate) {
-//        this.restTemplate = restTemplate;
-//    }
-
-    @ResponseBody
     @RequestMapping("/testRedisList")
     public String testRedisList() {
         Map result = new HashMap();
@@ -61,42 +34,17 @@ public class TestController {
     }
 
 
-//    @ApiImplicitParam(name = "book", value = "图书详细实体", required = true, dataType = "Book")
-    @ResponseBody
-    @RequestMapping("/testInterfaceMybatis")
-    public Map testInterfaceMybatis() {
-        Map result = new HashMap();
-//        Map param = new HashMap();
-//        param.put("instanceId", "2E767A073E2216F9");
-        Map appAdvices = testService.queryWfiAppAdvice();
-        log.info("查询数据库返回=================>{}", appAdvices);
-        result.put("data", appAdvices);
-        return result;
-    }
 
-//    @ApiImplicitParam(name = "id", value = "ID", required = true, dataType = "Long", paramType = "path")
-    @ResponseBody
-    @RequestMapping(value = "/testDataSource")
-    public Map testDataSource() {
+    @RequestMapping("/testRedis/{key}")
+    public String test(@PathVariable String key) {
         Map result = new HashMap();
-        Department department = testService.queryDepartment("1");
-        log.info("查询数据库返回=================>{}", department.toString());
-        result.put("data", department);
-        return result;
-    }
-
-
-    @ResponseBody
-    @RequestMapping("/test")
-    public String test() {
-        Map result = new HashMap();
+        Object value = RedisUtils.get(key);
         result.put("code", "0000");
         result.put("message", "请求成功");
-        result.put("data", "1111111111111111111111111111111");
+        result.put("data", value);
         return JSON.toJSONString(result);
     }
 
-    @ResponseBody
     @RequestMapping("/redisTest")
     public String redisTest() {
         String str = "redis test";
@@ -105,7 +53,6 @@ public class TestController {
         return "redis test success";
     }
 
-    @ResponseBody
     @RequestMapping("/redisGetValues/{key}")
     public Object redisGetValues(@PathVariable("key") String key) {
 
@@ -116,7 +63,6 @@ public class TestController {
         return o;
     }
 
-    @ResponseBody
     @RequestMapping("/redisHgetValues/{key}")
     public Object redisHgetValues(@PathVariable("key") String key) {
 
@@ -127,7 +73,6 @@ public class TestController {
         return o;
     }
 
-    @ResponseBody
     @RequestMapping("/redisDelete/{key}")
     public Object redisDelete(@PathVariable("key") String key) {
 
@@ -139,7 +84,6 @@ public class TestController {
     }
 
     @RequestMapping("/hmset")
-    @ResponseBody
     public Object setValues() {
         Map<String, Object> map = new HashMap<>();
         map.put("id", 1);
@@ -147,19 +91,16 @@ public class TestController {
         map.put("password", "tomcat");
         User user = new User();
         user.setUserId(1);
-        user.setUserName("tom");
+        user.setUsername("tom");
         user.setPassword("tomcat");
 
         RedisUtils.hmset("admin", map);
-        RedisUtils.hset("userObject", "user",user);
+        RedisUtils.hset("userObject", "user", user);
 
         return "success";
     }
 
 
-
-
-    @ResponseBody
     @GetMapping("/accessControl")
 //    @AccessLimit(limit = 5,sec = 60)  //加上自定义注解即可
     public Object getOrder(HttpServletRequest request) throws InterruptedException {
@@ -171,7 +112,6 @@ public class TestController {
     }
 
 
-    @ResponseBody
     @RequestMapping("/testInput")
     public String testInput(String input) {
         log.info("接收前端传入的参数为：[{}]",input);
@@ -190,53 +130,7 @@ public class TestController {
         return JSON.toJSONString(result);
     }
 
-
-
-    @ResponseBody
-    @RequestMapping("/getNextWorkDay")
-    public Object getNextWorkDay(Map<String, Object> input) {
-        log.info("接收前端传入的参数为：[{}]",input);
-        String url = "http://tool.bitefu.net/jiari/";
-        Map<String,String> variable = new HashMap<>();
-        variable.put("d","20201118");
-        variable.put("apikey","123456");
-        variable.put("type","6");
-        Object result = restTemplate.getForObject(url,Object.class,variable);
-//        Object result = HttpUtils.sendGet(url,variable);
-        System.out.println(result);
-//        Object result = HttpUtils.sendGet(url,variable);
-        JSONObject jsonObject = JSONObject.parseObject((String) result);
-        System.out.println(jsonObject);
-        return result;
-
-    }
-
-    @PostMapping("/match")
-    @ResponseBody
-    public Object match() {
-
-        MultiValueMap<String, Object> postParameters  = new LinkedMultiValueMap<>();
-        postParameters .add("user_id", 1);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/x-www-form-urlencoded");
-
-        HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<>(postParameters, headers);
-
-        List<Integer> object = (List<Integer>) restTemplate.postForObject("http://10.114.10.144:8080/api/model/i_match",
-                httpEntity, Object.class);
-
-        System.out.println(object);
-        object.add(111111111);
-        object.add(222222222);
-        object.add(null);
-        object.add(null);
-
-        return object;
-    }
-
     @PostMapping("/operationLog")
-    @ResponseBody
     public Object operationLog() throws Exception {
         Map<String, Object> params = new HashMap<>();
         List<String> list = new ArrayList<>();
@@ -248,12 +142,19 @@ public class TestController {
     }
 
     @GetMapping("/testOOM")
-    @ResponseBody
     public Object testOOM() {
         List<OOM> list = new ArrayList<>();
         for (int i = 0; i < 1000; i++) {
             list.add(new OOM());
         }
+        return "end";
+    }
+
+
+    @GetMapping("/getId")
+    public Object getId() {
+        long id = IdUtil.getSnowflake(1L, 1L).nextId();
+        System.out.println(id);
         return "end";
     }
 

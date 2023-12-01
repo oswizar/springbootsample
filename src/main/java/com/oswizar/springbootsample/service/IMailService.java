@@ -1,7 +1,6 @@
 package com.oswizar.springbootsample.service;
 
-import jakarta.mail.MessagingException;
-
+import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
@@ -34,5 +33,5 @@ public interface IMailService {
      * @param filePaths
      * @throws MessagingException
      */
-    void sendAttachmentsMail(String to, String subject, String content, List<String> filePaths) throws MessagingException, UnsupportedEncodingException;
+    void sendAttachmentsMail(String to, String subject, String content, List<String> filePaths) throws MessagingException, UnsupportedEncodingException, MessagingException;
 }

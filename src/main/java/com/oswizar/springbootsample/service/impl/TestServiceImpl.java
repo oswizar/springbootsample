@@ -1,13 +1,10 @@
 package com.oswizar.springbootsample.service.impl;
 
-import com.oswizar.springbootsample.config.datasource.TargetDataSource;
-import com.oswizar.springbootsample.entity.Department;
-import com.oswizar.springbootsample.mapper.DepartmentMapper;
+import com.oswizar.springbootsample.config.annotation.OperationLogDetail;
+import com.oswizar.springbootsample.config.enumeration.OperationType;
+import com.oswizar.springbootsample.config.enumeration.OperationUnit;
+import com.oswizar.springbootsample.mapper.UserMapper;
 import com.oswizar.springbootsample.service.TestIService;
-import com.oswizar.springbootsample.annotation.OperationLogDetail;
-import com.oswizar.springbootsample.enumeration.OperationType;
-import com.oswizar.springbootsample.enumeration.OperationUnit;
-import com.oswizar.springbootsample.mapper.TestMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,23 +21,7 @@ import java.util.Map;
 public class TestServiceImpl implements TestIService {
 
     @Autowired
-    private TestMapper testMapper;
-
-    @Autowired
-    private DepartmentMapper departmentMapper;
-
-    @TargetDataSource("ORACLE")
-    @Override
-    public Map queryWfiAppAdvice() {
-        Map list = testMapper.queryWfiAppAdviceHistory();
-        return list;
-    }
-
-    @TargetDataSource("MYSQL")
-    @Override
-    public Department queryDepartment(String id) {
-        return departmentMapper.queryDepartment(id);
-    }
+    private UserMapper userMapper;
 
 
     @Override

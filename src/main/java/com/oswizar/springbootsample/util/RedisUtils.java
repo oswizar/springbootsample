@@ -12,35 +12,15 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-/**
- * @date: 2019/4/26 14:19
- * @author: oswizar
- * @description:
- */
 @Component
 public final class RedisUtils {
 
-
-    private static  RedisTemplate  redisTemplate;
+    private static RedisTemplate  redisTemplate;
 
     @Autowired
     private void setRedisTemplate(RedisTemplate redisTemplate) {
         RedisUtils.redisTemplate = redisTemplate;
     }
-
-//    @SuppressWarnings("unchecked")
-//    private static RedisTemplate<String, Object> redisTemplate = SpringUtils
-//            .getBean("redisTemplate", RedisTemplate.class);
-
-
-
-
-//    @Autowired
-//    public void setRedisTemplate(RedisTemplate redisTemplate) {
-//        RedisUtils.redisTemplate = redisTemplate;
-//    }
-
-
 
     // =============================common============================
 

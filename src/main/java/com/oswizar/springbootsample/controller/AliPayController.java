@@ -15,13 +15,13 @@ import com.alipay.api.response.AlipayTradePrecreateResponse;
 import com.alipay.api.response.AlipayTradeQueryResponse;
 import com.oswizar.springbootsample.config.AlipayConfig;
 import com.oswizar.springbootsample.util.ZxingUtils;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -92,7 +92,7 @@ public class AliPayController {
                 // 需要修改为运行机器上的路径
                 String filePath = String.format("D:/tmp/qr- %s.png", response.getOutTradeNo());
                 //将生成的二维码存放到指定路径
-                ZxingUtils.getQRCodeImge(response.getQrCode(), 256, filePath);
+                ZxingUtils.getQRCodeImage(response.getQrCode(), 256, filePath);
 
             }
         } catch (AlipayApiException e) {

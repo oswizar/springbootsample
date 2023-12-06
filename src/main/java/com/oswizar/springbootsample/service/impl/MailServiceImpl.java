@@ -1,7 +1,7 @@
 package com.oswizar.springbootsample.service.impl;
 
 
-import com.oswizar.springbootsample.service.IMailService;
+import com.oswizar.springbootsample.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
@@ -23,7 +23,7 @@ import java.util.Objects;
  * MailService实现类
  */
 @Service
-public class MailServiceImpl implements IMailService {
+public class MailServiceImpl implements MailService {
 
 //    static {
 //        System.setProperty("mail.mime.splitlongparameters", "false");

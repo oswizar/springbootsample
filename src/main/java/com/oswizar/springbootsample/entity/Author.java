@@ -18,20 +18,11 @@ import lombok.EqualsAndHashCode;
  * @since 2020-08-13
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
 @TableName("t_author")
 public class Author implements Serializable {
-
     private static final long serialVersionUID=1L;
-
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
-
     private String name;
-
     private Integer age;
-
-    private List<Book> bookList;
-
-
 }

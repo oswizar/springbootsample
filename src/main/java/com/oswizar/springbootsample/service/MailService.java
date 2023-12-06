@@ -4,7 +4,7 @@ import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-public interface IMailService {
+public interface MailService {
 
     /**
      * 发送普通的文本邮件

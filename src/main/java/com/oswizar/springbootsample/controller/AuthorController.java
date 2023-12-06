@@ -2,7 +2,7 @@ package com.oswizar.springbootsample.controller;
 
 
 import com.oswizar.springbootsample.entity.Author;
-import com.oswizar.springbootsample.service.IAuthorService;
+import com.oswizar.springbootsample.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,12 +23,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthorController {
 
     @Autowired
-    private IAuthorService authorService;
+    private AuthorService authorService;
 
 
     @PostMapping("/findAuthorById")
     public Object findAuthorById(@RequestBody Author author) {
-        return authorService.findAuthorById(author.getId());
+        return authorService.getById(author.getId());
 
     }
 

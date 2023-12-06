@@ -1,6 +1,6 @@
 package com.oswizar.springbootsample.service;
 
-import com.oswizar.springbootsample.entity.Book;
+import com.oswizar.springbootsample.entity.Author;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,9 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author oswizar
  * @since 2020-08-13
  */
-public interface IBookService extends IService<Book> {
-
-
-    Book findBookById(int id);
+public interface AuthorService extends IService<Author> {
 
 }

@@ -2,7 +2,7 @@ package com.oswizar.springbootsample.controller;
 
 import cn.hutool.core.util.IdUtil;
 import com.alibaba.fastjson.JSON;
-import com.oswizar.springbootsample.entity.OOM;
+import com.oswizar.springbootsample.model.OOM;
 import com.oswizar.springbootsample.entity.User;
 import com.oswizar.springbootsample.service.TestIService;
 import com.oswizar.springbootsample.util.*;
@@ -90,7 +90,7 @@ public class TestController {
         map.put("name", "tom");
         map.put("password", "tomcat");
         User user = new User();
-        user.setUserId(1);
+        user.setId(1);
         user.setUsername("tom");
         user.setPassword("tomcat");
 

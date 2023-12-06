@@ -52,7 +52,7 @@ public class OperationAspect {
             operationLog.put("level", annotation.level());
             operationLog.put("des", getDetail(((MethodSignature)joinPoint.getSignature()).getParameterNames(),
                     joinPoint.getArgs(),annotation));
-            operationLog.put("operationType", annotation.operationType().getValue());
+            operationLog.put("operationType", annotation.operationType().getType());
             operationLog.put("operationUnit", annotation.operationUnit().getValue());
         }
         //TODO 这里保存日志

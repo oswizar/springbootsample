@@ -1,7 +1,7 @@
 package com.oswizar.springbootsample.filter;
 
 import cn.hutool.jwt.JWTUtil;
-import com.oswizar.springbootsample.entity.LoginUser;
+import com.oswizar.springbootsample.model.LoginUser;
 import com.oswizar.springbootsample.util.RedisUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

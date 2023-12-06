@@ -1,12 +1,11 @@
 package com.oswizar.springbootsample.service.impl;
 
 import cn.hutool.jwt.JWTUtil;
-import com.oswizar.springbootsample.entity.LoginUser;
-import com.oswizar.springbootsample.entity.ResponseResult;
+import com.oswizar.springbootsample.model.LoginUser;
+import com.oswizar.springbootsample.model.ResponseResult;
 import com.oswizar.springbootsample.entity.User;
 import com.oswizar.springbootsample.service.LoginService;
 import com.oswizar.springbootsample.util.RedisUtils;
-import org.apache.ibatis.binding.MapperMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,7 +14,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 

@@ -2,7 +2,7 @@ package com.oswizar.springbootsample.service.impl;
 
 import com.oswizar.springbootsample.entity.Book;
 import com.oswizar.springbootsample.mapper.BookMapper;
-import com.oswizar.springbootsample.service.IBookService;
+import com.oswizar.springbootsample.service.BookService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,13 +16,6 @@ import org.springframework.stereotype.Service;
  * @since 2020-08-13
  */
 @Service
-public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements IBookService {
+public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements BookService {
 
-    @Autowired
-    private BookMapper bookMapper;
-
-    @Override
-    public Book findBookById(int id) {
-        return bookMapper.findBookById(id);
-    }
 }

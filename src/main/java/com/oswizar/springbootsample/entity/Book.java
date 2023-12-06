@@ -17,23 +17,13 @@ import lombok.EqualsAndHashCode;
  * @since 2020-08-13
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
 @TableName("t_book")
 public class Book implements Serializable {
-
     private static final long serialVersionUID=1L;
-
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
-
     private String name;
-
     private BigDecimal price;
-
     private Integer authorId;
-
-    private Author author;
-
-    private float priceMax;
-
+    private String author;
 }

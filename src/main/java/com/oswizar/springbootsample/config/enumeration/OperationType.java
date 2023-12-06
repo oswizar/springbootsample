@@ -10,17 +10,13 @@ public enum OperationType {
     UPDATE("update"),
     INSERT("insert");
 
-    private String value;
+    private final String type;
 
-    public String getValue() {
-        return value;
+    public String getType() {
+        return type;
     }
 
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    OperationType(String s) {
-        this.value = s;
+    OperationType(String type) {
+        this.type = type;
     }
 }

@@ -1,4 +1,4 @@
-package com.oswizar.springbootsample.entity;
+package com.oswizar.springbootsample.model;
 
 import lombok.Data;
 

@@ -1,11 +1,10 @@
 package com.oswizar.springbootsample.service.impl;
 
-import com.oswizar.springbootsample.service.IAuthorService;
+import com.oswizar.springbootsample.service.AuthorService;
 import com.oswizar.springbootsample.entity.Author;
 import com.oswizar.springbootsample.mapper.AuthorMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,13 +16,6 @@ import org.springframework.stereotype.Service;
  * @since 2020-08-13
  */
 @Service
-public class AuthorServiceImpl extends ServiceImpl<AuthorMapper, Author> implements IAuthorService {
+public class AuthorServiceImpl extends ServiceImpl<AuthorMapper, Author> implements AuthorService {
 
-    @Autowired
-    private AuthorMapper authorMapper;
-
-    @Override
-    public Author findAuthorById(int id) {
-        return authorMapper.findAuthorById(id);
-    }
 }

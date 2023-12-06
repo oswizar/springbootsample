@@ -1,6 +1,6 @@
 package com.oswizar.springbootsample.controller;
 
-import com.oswizar.springbootsample.service.IMailService;
+import com.oswizar.springbootsample.service.MailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -16,7 +16,7 @@ import java.util.List;
 public class SendMailController {
 
     @Autowired
-    private IMailService mailService;
+    private MailService mailService;
 
 
     /**

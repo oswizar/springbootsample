@@ -2,7 +2,7 @@ package com.oswizar.springbootsample.controller;
 
 
 import com.oswizar.springbootsample.entity.Book;
-import com.oswizar.springbootsample.service.IBookService;
+import com.oswizar.springbootsample.service.BookService;
 import com.oswizar.springbootsample.util.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +28,7 @@ import java.util.List;
 public class BookController {
 
     @Autowired
-    private IBookService bookService;
+    private BookService bookService;
 
 
     @Autowired
@@ -37,7 +37,7 @@ public class BookController {
 
     @PostMapping("/findBookById")
     public Object findBookById(@RequestBody Book book) {
-        return bookService.findBookById(book.getId());
+        return bookService.getById(book.getId());
 
     }
 

@@ -20,6 +20,11 @@ public class TestController {
     @Autowired
     private TestIService testService;
 
+    @GetMapping("/test")
+    public Object test() {
+        return null;
+    }
+
     @RequestMapping("/testRedisList")
     public String testRedisList() {
         Map result = new HashMap();
@@ -112,23 +117,6 @@ public class TestController {
     }
 
 
-    @RequestMapping("/testInput")
-    public String testInput(String input) {
-        log.info("接收前端传入的参数为：[{}]",input);
-
-        String str = "（一）低门槛全覆盖：对企业成立时间无硬性要求，初创期企业也可以申请；\n" +
-                "（二）信用贷免担保：免担保、无抵押，真正意义上的纯信用贷款；\n" +
-                "（三）维度多额度高：通过打分模板对应贷款额度，创始人经历、家庭情况、企业情况、外部认证等多个维度都可以成为“加分项”；\n" +
-                "（四）标准化手续快：手续齐全的前提下最快一周可以放款。";
-        System.out.println("str:" + str);
-
-
-        Map result = new HashMap();
-        result.put("code", "0000");
-        result.put("message", "请求成功");
-        result.put("data", "1111111111111111111111111111111");
-        return JSON.toJSONString(result);
-    }
 
     @PostMapping("/operationLog")
     public Object operationLog() throws Exception {

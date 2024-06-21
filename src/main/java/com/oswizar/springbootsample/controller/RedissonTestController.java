@@ -29,7 +29,7 @@ public class RedissonTestController {
     public void redisLockTest() {
         // 初始化秒杀库存数量
         RedisUtils.set(FLASH_SALE_GOODS_STOCK, 10);
-        List<Future> futureList = new ArrayList<>();
+        List<Future<Integer>> futureList = new ArrayList<>();
         // 多线程异步执行
         ExecutorService executors = Executors.newCachedThreadPool();
         // 模拟用户秒杀
@@ -45,7 +45,7 @@ public class RedissonTestController {
         AtomicInteger stockSum = new AtomicInteger();
         futureList.forEach(t -> {
             try {
-                stockSum.addAndGet((Integer) t.get());
+                stockSum.addAndGet(t.get());
                 log.info("成功秒杀数量:{}", stockSum);
             } catch (Exception e) {
                 log.error("get stock num error", e);

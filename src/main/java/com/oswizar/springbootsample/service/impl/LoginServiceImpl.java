@@ -4,9 +4,10 @@ import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.jwt.JWTPayload;
 import cn.hutool.jwt.JWTUtil;
+import com.oswizar.springbootsample.config.ConfigConstants;
+import com.oswizar.springbootsample.entity.User;
 import com.oswizar.springbootsample.model.LoginUser;
 import com.oswizar.springbootsample.model.ResponseResult;
-import com.oswizar.springbootsample.entity.User;
 import com.oswizar.springbootsample.service.LoginService;
 import com.oswizar.springbootsample.util.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +36,9 @@ public class LoginServiceImpl implements LoginService {
             throw new RuntimeException("登录失败");
         }
         LoginUser loginUser = (LoginUser) authenticate.getPrincipal();
-        Map<String,Object> payload = new HashMap<>();
+        Map<String, Object> payload = new HashMap<>();
         DateTime now = DateTime.now();
-        DateTime exp = now.offsetNew(DateField.SECOND, 30);
+        DateTime exp = now.offsetNew(DateField.SECOND, 60 * 60 * 12);
 
         // reserved claims
         // 签发时间
@@ -50,7 +51,7 @@ public class LoginServiceImpl implements LoginService {
         // private claims
         payload.put("username", loginUser.getUsername());
 
-        String jwt = JWTUtil.createToken(payload, "secret".getBytes(StandardCharsets.UTF_8));
+        String jwt = JWTUtil.createToken(payload, ConfigConstants.JWT_SECRET_KEY.getBytes(StandardCharsets.UTF_8));
         Map<String, String> tokenMap = Map.of("token", jwt);
         RedisUtils.set("login:" + loginUser.getUsername(), loginUser, 60 * 60 * 12);
         return ResponseResult.success(tokenMap);

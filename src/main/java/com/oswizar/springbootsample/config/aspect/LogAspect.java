@@ -9,14 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
-import java.util.Objects;
-import java.util.Optional;
 
 @Aspect
 @Order(5)
@@ -47,11 +44,11 @@ public class LogAspect {
         HttpServletRequest request = attributes.getRequest();
 
         // 记录下请求内容
-        logger.info("URL: " + request.getRequestURL().toString());
-        logger.info("HTTP_METHOD: " + request.getMethod());
-        logger.info("IP: " + request.getRemoteAddr());
-        logger.info("CLASS_METHOD: " + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
-        logger.info("ARGS: " + Arrays.toString(joinPoint.getArgs()));
+        logger.info("URL>>>>>>>>>>>>" + request.getRequestURL().toString());
+        logger.info("HTTP_METHOD>>>>" + request.getMethod());
+        logger.info("IP>>>>>>>>>>>>>" + request.getRemoteAddr());
+        logger.info("CLASS_METHOD>>>" + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
+        logger.info("ARGS>>>>>>>>>>>" + Arrays.toString(joinPoint.getArgs()));
     }
 
     /**
@@ -59,9 +56,7 @@ public class LogAspect {
      */
     @AfterReturning(returning = "result", pointcut = "webLog()")
     public void doAfterReturning(Object result) {
-        if (Objects.nonNull(result)) {
-            logger.info("RESPONSE：" + result.toString() + "\n");
-        }
+        logger.info("RESPONSE>>>>>>>" + result + "\n");
     }
 
 }

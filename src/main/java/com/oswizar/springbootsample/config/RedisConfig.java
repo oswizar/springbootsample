@@ -19,9 +19,8 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class RedisConfig extends CachingConfigurerSupport {
 
     @Bean
-    @SuppressWarnings("all")
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
-        RedisTemplate<String, Object> template = new RedisTemplate<String, Object>();
+        RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(factory);
         // 通用对象序列化
         GenericJackson2JsonRedisSerializer jackson2JsonRedisSerializer = new GenericJackson2JsonRedisSerializer();
@@ -37,59 +36,6 @@ public class RedisConfig extends CachingConfigurerSupport {
         return template;
     }
 
-    /**
-     * 对hash类型的数据操作
-     *
-     * @param redisTemplate
-     * @return
-     */
-    @Bean
-    public HashOperations<String, String, Object> hashOperations(RedisTemplate<String, Object> redisTemplate) {
-        return redisTemplate.opsForHash();
-    }
 
-    /**
-     * 对redis字符串类型数据操作
-     *
-     * @param redisTemplate
-     * @return
-     */
-    @Bean
-    public ValueOperations<String, Object> valueOperations(RedisTemplate<String, Object> redisTemplate) {
-        return redisTemplate.opsForValue();
-    }
-
-    /**
-     * 对链表类型的数据操作
-     *
-     * @param redisTemplate
-     * @return
-     */
-    @Bean
-    public ListOperations<String, Object> listOperations(RedisTemplate<String, Object> redisTemplate) {
-        return redisTemplate.opsForList();
-    }
-
-    /**
-     * 对无序集合类型的数据操作
-     *
-     * @param redisTemplate
-     * @return
-     */
-    @Bean
-    public SetOperations<String, Object> setOperations(RedisTemplate<String, Object> redisTemplate) {
-        return redisTemplate.opsForSet();
-    }
-
-    /**
-     * 对有序集合类型的数据操作
-     *
-     * @param redisTemplate
-     * @return
-     */
-    @Bean
-    public ZSetOperations<String, Object> zSetOperations(RedisTemplate<String, Object> redisTemplate) {
-        return redisTemplate.opsForZSet();
-    }
 
 }

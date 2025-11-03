@@ -7,8 +7,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface BookMapper extends BaseMapper<Book> {
 
-    Book findBookById(int id);
-
-    Book findBookByAuthorId(int authorId);
 
 }

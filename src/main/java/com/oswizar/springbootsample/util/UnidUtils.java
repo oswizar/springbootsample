@@ -27,4 +27,10 @@ public class UnidUtils {
             return buf.toString();
         }
     }
+
+
+    public static void main(String[] args) {
+        String unid = getUNID();
+        System.out.println(unid);
+    }
 }

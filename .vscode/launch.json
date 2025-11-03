@@ -1,0 +1,42 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "SpringBootApplicationTest",
+            "request": "launch",
+            "mainClass": "com.oswizar.springbootsample.SpringBootApplicationTest",
+            "projectName": "springbootsample"
+        },
+        {
+            "type": "java",
+            "name": "SpringBootSampleApplication",
+            "request": "launch",
+            "mainClass": "com.oswizar.springbootsample.SpringBootSampleApplication",
+            "projectName": "springbootsample"
+        },
+        {
+            "type": "java",
+            "name": "Md5Utils",
+            "request": "launch",
+            "mainClass": "com.oswizar.springbootsample.util.Md5Utils",
+            "projectName": "springbootsample"
+        },
+        {
+            "type": "java",
+            "name": "UnidUtils",
+            "request": "launch",
+            "mainClass": "com.oswizar.springbootsample.util.UnidUtils",
+            "projectName": "springbootsample"
+        }
+    ]
+}

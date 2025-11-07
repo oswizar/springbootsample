@@ -5,6 +5,7 @@ import com.oswizar.springbootsample.entity.User;
 import com.oswizar.springbootsample.service.LoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +17,7 @@ public class LoginController {
     @Autowired
     LoginService loginService;
 
-    @RequestMapping("/accessDenied")
+    @GetMapping("/accessDenied")
     public Object accessDenied() {
         return "accessDenied";
     }

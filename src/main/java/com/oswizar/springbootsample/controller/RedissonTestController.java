@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,7 +26,7 @@ public class RedissonTestController {
     final static String FLASH_SALE_GOODS_STOCK = "FLASH_SALE_GOODS_STOCK";
     final static String FLASH_SALE_LOCK_KEY = "FLASH_SALE_LOCK_KEY";
 
-    @RequestMapping("/redisLockTest")
+    @GetMapping("/redisLockTest")
     public void redisLockTest() {
         // 初始化秒杀库存数量
         RedisUtils.set(FLASH_SALE_GOODS_STOCK, 10);

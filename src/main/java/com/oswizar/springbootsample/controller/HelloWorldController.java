@@ -4,6 +4,7 @@ import com.oswizar.springbootsample.util.RedisUtils;
 import com.oswizar.springbootsample.util.ZxingUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +23,7 @@ public class HelloWorldController {
 
     private static final String RESULT = "result";
 
-    @RequestMapping("/index")
+    @GetMapping("/index")
     public String index() throws ExecutionException, InterruptedException {
         CompletableFuture<Void> supplyAsync = CompletableFuture.runAsync(() -> {
             try {
@@ -59,12 +60,12 @@ public class HelloWorldController {
     }
 
     @PreAuthorize("hasAuthority({'admin'})")
-    @RequestMapping("/success")
+    @GetMapping("/success")
     public String success() {
         return "success";
     }
 
-    @RequestMapping("/helloString")
+    @GetMapping("/helloString")
     public Object helloString() {
         Map<String, String> map = new HashMap<>();
         map.put("1", "111");
@@ -77,7 +78,7 @@ public class HelloWorldController {
         return RedisUtils.get(RESULT);
     }
 
-    @RequestMapping("/generateQRCode")
+    @GetMapping("/generateQRCode")
     public Object generateQRCode(HttpServletRequest request) {
         String contents = request.getParameter("contents");
         Map<String, Object> res = new HashMap<>();

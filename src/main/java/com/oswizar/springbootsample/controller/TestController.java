@@ -5,13 +5,18 @@ import com.alibaba.fastjson.JSON;
 import com.oswizar.springbootsample.model.OOM;
 import com.oswizar.springbootsample.entity.User;
 import com.oswizar.springbootsample.service.TestIService;
-import com.oswizar.springbootsample.util.*;
+import com.oswizar.springbootsample.util.RedisUtils;
+import com.oswizar.springbootsample.util.ZxingUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @Slf4j
@@ -25,7 +30,7 @@ public class TestController {
         return null;
     }
 
-    @RequestMapping("/testRedisList")
+    @GetMapping("/testRedisList")
     public String testRedisList() {
         Map result = new HashMap();
         result.put("code", "0000");
@@ -40,7 +45,7 @@ public class TestController {
 
 
 
-    @RequestMapping("/testRedis/{key}")
+    @GetMapping("/testRedis/{key}")
     public String test(@PathVariable String key) {
         Map result = new HashMap();
         Object value = RedisUtils.get(key);
@@ -50,7 +55,7 @@ public class TestController {
         return JSON.toJSONString(result);
     }
 
-    @RequestMapping("/redisTest")
+    @GetMapping("/redisTest")
     public String redisTest() {
         String str = "redis test";
         RedisUtils.set("example", str);
@@ -58,7 +63,7 @@ public class TestController {
         return "redis test success";
     }
 
-    @RequestMapping("/redisGetValues/{key}")
+    @GetMapping("/redisGetValues/{key}")
     public Object redisGetValues(@PathVariable("key") String key) {
 
         log.info("请求参数key:{}", key);
@@ -68,7 +73,7 @@ public class TestController {
         return o;
     }
 
-    @RequestMapping("/redisHgetValues/{key}")
+    @GetMapping("/redisHgetValues/{key}")
     public Object redisHgetValues(@PathVariable("key") String key) {
 
         log.info("请求参数key:{}", key);
@@ -78,7 +83,7 @@ public class TestController {
         return o;
     }
 
-    @RequestMapping("/redisDelete/{key}")
+    @GetMapping("/redisDelete/{key}")
     public Object redisDelete(@PathVariable("key") String key) {
 
         log.info("请求参数key:{}", key);
@@ -88,7 +93,7 @@ public class TestController {
         return "Delete Success";
     }
 
-    @RequestMapping("/hmset")
+    @GetMapping("/hmset")
     public Object setValues() {
         Map<String, Object> map = new HashMap<>();
         map.put("id", 1);

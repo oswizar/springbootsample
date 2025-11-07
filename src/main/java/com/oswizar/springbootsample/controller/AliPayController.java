@@ -17,7 +17,10 @@ import com.oswizar.springbootsample.config.AlipayConfig;
 import com.oswizar.springbootsample.util.ZxingUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +44,7 @@ public class AliPayController {
     AlipayClient alipayClient = AlipayConfig.alipayClient;
 
 
-    @RequestMapping("/qrTest")
+    @GetMapping("/qrTest")
     public ModelAndView qrTest() {
         log.info("Invoke quTest >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         ModelAndView mv = new ModelAndView("success");
@@ -56,7 +59,7 @@ public class AliPayController {
      * @param httpResponse
      * @throws Exception
      */
-    @RequestMapping("/tradePrecreate/{outTradeNo}")
+    @GetMapping("/tradePrecreate/{outTradeNo}")
     public void tradePrecreate(@PathVariable String outTradeNo,
                                HttpServletResponse httpResponse) throws Exception {
         AlipayTradePrecreateRequest request = new AlipayTradePrecreateRequest();
@@ -114,7 +117,7 @@ public class AliPayController {
      * @param httpResponse
      * @throws Exception
      */
-    @RequestMapping("/tradePagePay/{outTradeNo}")
+    @GetMapping("/tradePagePay/{outTradeNo}")
     public void tradePagePay(@PathVariable String outTradeNo,
                              HttpServletResponse httpResponse) throws Exception {
         AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
@@ -197,7 +200,7 @@ public class AliPayController {
      * @return
      * @throws AlipayApiException
      */
-    @RequestMapping("/tradeQuery/{outTradeNo}")
+    @GetMapping("/tradeQuery/{outTradeNo}")
     @ResponseBody
     public String tradeQuery(@PathVariable String outTradeNo) throws AlipayApiException {
 
@@ -264,7 +267,7 @@ public class AliPayController {
      * @return
      * @throws AlipayApiException
      */
-    @RequestMapping("/tradeClose")
+    @PostMapping("/tradeClose")
     @ResponseBody
     public String tradeClose(String outTradeNo) throws AlipayApiException {
         AlipayTradeCloseRequest request = new AlipayTradeCloseRequest();

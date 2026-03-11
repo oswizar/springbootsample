@@ -8,18 +8,20 @@
 
 ## 技术栈
 
-- **核心框架**: Spring Boot 2.7.5
-- **编程语言**: Java 11
+- **核心框架**: Spring Boot 3.5.11
+- **编程语言**: Java 17
 - **构建工具**: Maven
 - **数据库**: MySQL
-- **ORM框架**: MyBatis Plus
-- **数据库连接池**: Druid
-- **缓存**: Redis + Redisson (分布式锁)
-- **安全框架**: Spring Security + JWT
+- **ORM 框架**: MyBatis Plus 3.5.16
+- **数据库连接池**: Druid 1.2.16
+- **缓存**: Redis + Redisson 4.3.0 (分布式锁)
+- **安全框架**: Spring Security + JWT 0.11.5
 - **消息队列**: Apache Kafka
 - **搜索引擎**: Elasticsearch
-- **模板引擎**: Thymeleaf (通过国际化配置推断)
-- **其他**: Lombok, AOP, Validation, Hutool工具库
+- **微服务治理**: Alibaba Sentinel 2025.1.0.0
+- **支付集成**: 支付宝 SDK 4.40.674
+- **二维码生成**: ZXing 3.3.3
+- **其他**: Lombok, AOP, Validation, Hutool 5.8.40, Gson
 
 ## 功能模块
 
@@ -77,34 +79,44 @@ src/main/java/com/oswizar/springbootsample/
 ## 环境配置
 
 ### 数据库配置
-- MySQL数据库，连接地址: `jdbc:mysql://localhost:3306/test`
-- 用户名: `root`
-- 密码: `123456`
+- MySQL 数据库，连接地址：`jdbc:mysql://localhost:3306/test`
+- 用户名：`root`
+- 密码：`123456`
 
-### Redis配置
-- Redis服务器地址: `localhost:6379`
-- 密码: `123456`
+### Redis 配置
+- Redis 服务器地址：`localhost:6379`
+- 密码：`123456`
+- 连接超时：`1000ms`
+- 连接池最大连接数：`200`
 
-### Elasticsearch配置
-- 地址: `http://localhost:9200`
+### Elasticsearch 配置
+- 地址：`http://localhost:9200`
+- 连接超时：`1s`
+- 读取超时：`30s`
 
-### Kafka配置
-- 服务器地址: `host.docker.internal:9092`
+### Kafka 配置
+- 服务器地址：`localhost:9092`
+
+### Sentinel 配置
+- 控制台地址：`localhost:8080`
+- 应用端口：`8719`
 
 ### 邮件服务配置
-- SMTP服务器: `smtp-mail.outlook.com`
-- 端口: `587`
-- 用户名: `oswizar@outlook.com`
+- SMTP 服务器：`smtp-mail.outlook.com`
+- 端口：`587`
+- 用户名：`oswizar@outlook.com`
+- 开启 TLS 加密
 
 ## 快速开始
 
 ### 环境要求
-- Java 11+
+- Java 17+
 - Maven 3.6+
 - MySQL 5.7+
 - Redis
 - Elasticsearch
 - Kafka
+- Sentinel Dashboard (可选)
 
 ### 构建和运行
 
@@ -135,19 +147,20 @@ mvn spring-boot:run
 java -jar target/springbootsample.jar
 ```
 
-## API接口
+## API 接口
 
-项目启动后，可通过以下地址访问API:
+项目启动后，可通过以下地址访问 API:
 
-- 基础路径: `http://localhost:8081/springbootsample`
-- Hello World示例: `GET /springbootsample/index`
-- 用户认证: `POST /springbootsample/user/login`
-- 图书管理: `POST /springbootsample/book/findBookById`
-- 作者管理: `POST /springbootsample/author/findAuthorById`
-- Redis测试: `/springbootsample/redisLockTest`
-- Kafka消息: `POST /springbootsample/api/kafka/send`
-- 邮件发送: `GET /springbootsample/sendMail/simpleMail`
-- 支付宝支付: `/springbootsample/alipay/pagePay`
+- **基础路径**: `http://localhost:8888/springbootsample`
+- **Hello World 示例**: `GET /springbootsample/index`
+- **用户认证**: `POST /springbootsample/user/login`
+- **图书管理**: `POST /springbootsample/book/findBookById`
+- **作者管理**: `POST /springbootsample/author/findAuthorById`
+- **Redis 分布式锁测试**: `/springbootsample/redisLockTest`
+- **Kafka消息发送**: `POST /springbootsample/api/kafka/send`
+- **邮件发送**: `GET /springbootsample/sendMail/simpleMail`
+- **支付宝支付**: `/springbootsample/alipay/pagePay`
+- **Sentinel 监控**: 需配置 Sentinel Dashboard 访问
 
 ## 安全说明
 

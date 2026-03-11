@@ -12,15 +12,18 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
 @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
+
+    private static final String ROOT_USERNAME = "root";
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // 获取token
@@ -36,11 +39,25 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         } catch (Exception e) {
             throw new RuntimeException("token解析异常");
         }
-        boolean validate = jwt.setKey(ConfigConstants.JWT_SECRET_KEY.getBytes()).validate(0);
+        String username = (String) jwt.getPayload("username");
+        
+        // root用户token永不过期，跳过过期时间验证
+        boolean isRootUser = ROOT_USERNAME.equals(username);
+        boolean validate;
+        if (isRootUser) {
+            boolean hasExp = jwt.getPayload("exp") != null;
+            if (hasExp) {
+                validate = jwt.setKey(ConfigConstants.JWT_SECRET_KEY.getBytes()).validate(0);
+            } else {
+                validate = jwt.setKey(ConfigConstants.JWT_SECRET_KEY.getBytes()).validate(-1);
+            }
+        } else {
+            validate = jwt.setKey(ConfigConstants.JWT_SECRET_KEY.getBytes()).validate(0);
+        }
+
         if (!validate) {
             throw new RuntimeException("token验证异常");
         }
-        String username = (String) jwt.getPayload("username");
         // 根据解析出来的用户名到缓存中获取用户信息
         String userKey = "login:" + username;
         LoginUser loginUser = (LoginUser) RedisUtils.get(userKey);

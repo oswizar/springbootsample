@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import javax.validation.ConstraintViolationException;
+import jakarta.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
-    @ExceptionHandler(RuntimeException.class)
+    @ExceptionHandler(Exception.class)
     public ResponseResult serverError(Exception e) {
         log.error(String.valueOf(e));
         return ResponseResult.result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "System服务器错误", null);
@@ -45,7 +45,7 @@ public class GlobalExceptionHandler {
         log.error(String.valueOf(e));
         BindingResult bindingResult = e.getBindingResult();
         List<String> errors = bindingResult.getFieldErrors().stream()
-                .map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage()).collect(Collectors.toList());
+                .map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage()).toList();
         return ResponseResult.fail(HttpStatus.BAD_REQUEST.value(), errors.toString());
     }
 

@@ -5,25 +5,20 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
+
+import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-/**
- * <p>
- *
- * </p>
- *
- * @author oswizar
- * @since 2020-08-13
- */
 @Data
 @TableName("t_book")
 public class Book implements Serializable {
+    @Serial
     private static final long serialVersionUID=1L;
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
-    @NotBlank
+    @NotBlank(message = "书籍名称不能为空")
     private String name;
     private BigDecimal price;
     private Integer authorId;

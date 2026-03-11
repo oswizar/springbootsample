@@ -12,21 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 
-/**
- * <p>
- *  前端控制器
- * </p>
- *
- * @author oswizar
- * @since 2020-08-13
- */
 @RestController
 @RequestMapping("/author")
 @Slf4j
-@Validated
 public class AuthorController {
 
     @Autowired

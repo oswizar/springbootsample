@@ -1,12 +1,13 @@
 package com.oswizar.springbootsample.controller;
 
+import cn.hutool.core.util.IdUtil;
 import com.oswizar.springbootsample.entity.Product;
+import com.oswizar.springbootsample.model.ResponseResult;
 import com.oswizar.springbootsample.service.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,43 +18,49 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping("/createProduct")
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
-        return new ResponseEntity<>(productService.saveProduct(product), HttpStatus.CREATED);
+    public ResponseResult createProduct(@RequestBody Product product) {
+        // 如果前端没有传 id，自动生成一个 Long 类型的 ID（雪花算法）
+        if (product.getId() == null) {
+            product.setId(String.valueOf(IdUtil.getSnowflake(1L, 1L).nextId()));
+        }
+        product.setCreated_at(Instant.now());
+        Product savedProduct = productService.saveProduct(product);
+        return ResponseResult.success(savedProduct);
     }
 
     @GetMapping("/getAllProducts")
-    public ResponseEntity<List<Product>> getAllProducts() {
-        return ResponseEntity.ok(productService.getAllProducts());
+    public ResponseResult getAllProducts() {
+        List<Product> products = productService.getAllProducts();
+        return ResponseResult.success(products);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable String id) {
+    public ResponseResult getProductById(@PathVariable String id) {
         Optional<Product> product = productService.getProductById(id);
-        return product.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        return product.map(ResponseResult::success).orElseGet(() -> ResponseResult.fail(404, "商品不存在"));
     }
 
     @GetMapping("/category/{category}")
-    public ResponseEntity<List<Product>> getProductsByCategory(@PathVariable String category) {
-        return ResponseEntity.ok(productService.getProductsByCategory(category));
+    public ResponseResult getProductsByCategory(@PathVariable String category) {
+        List<Product> products = productService.getProductsByCategory(category);
+        return ResponseResult.success(products);
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<Product>> searchProducts(@RequestParam String keyword) {
-        return ResponseEntity.ok(productService.searchProducts(keyword));
+    public ResponseResult searchProducts(@RequestParam String keyword) {
+        List<Product> products = productService.searchProducts(keyword);
+        return ResponseResult.success(products);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(
-            @PathVariable String id,
-            @RequestBody Product product) {
-        product.setId(id);
-        return ResponseEntity.ok(productService.saveProduct(product));
+    @PutMapping("/updateProduct")
+    public ResponseResult updateProduct(@RequestBody Product product) {
+        Product updatedProduct = productService.saveProduct(product);
+        return ResponseResult.success(updatedProduct);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable String id) {
+    public ResponseResult deleteProduct(@PathVariable String id) {
         productService.deleteProduct(id);
-        return ResponseEntity.noContent().build();
+        return ResponseResult.success("删除成功", null);
     }
 }

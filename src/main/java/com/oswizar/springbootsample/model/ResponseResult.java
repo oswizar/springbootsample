@@ -7,7 +7,7 @@ import java.io.Serializable;
 @Data
 public class ResponseResult implements Serializable {
     private int code;
-    private String msg;
+    private String message;
     private Object data;
 
     public static ResponseResult success(Object data) {
@@ -22,14 +22,10 @@ public class ResponseResult implements Serializable {
         return result(code, msg, null);
     }
 
-    public static ResponseResult fail(int code, String msg, Object data) {
-        return result(code, msg, data);
-    }
-
     public static ResponseResult result(int code, String msg, Object data) {
         ResponseResult res = new ResponseResult();
         res.setCode(code);
-        res.setMsg(msg);
+        res.setMessage(msg);
         res.setData(data);
         return res;
     }

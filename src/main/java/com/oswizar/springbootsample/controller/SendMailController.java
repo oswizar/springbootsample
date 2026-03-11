@@ -1,5 +1,6 @@
 package com.oswizar.springbootsample.controller;
 
+import com.oswizar.springbootsample.model.ResponseResult;
 import com.oswizar.springbootsample.service.MailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.mail.MessagingException;
+import jakarta.mail.MessagingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class SendMailController {
      * @return
      */
     @PostMapping("/sendSimpleMail")
-    public Object sendSimpleMail() {
+    public ResponseResult sendSimpleMail() {
 
         SimpleMailMessage message = new SimpleMailMessage();
         String to = "656806549@qq.com";
@@ -34,7 +35,7 @@ public class SendMailController {
 
         mailService.sendSimpleMail(to,subject,context);
 
-        return "Sent Successfully";
+        return ResponseResult.success("邮件发送成功", null);
     }
 
 
@@ -43,7 +44,7 @@ public class SendMailController {
      * @return
      */
     @PostMapping("/sendInlineResourceMail")
-    public Object sendInlineResourceMail() throws MessagingException {
+    public ResponseResult sendInlineResourceMail() throws MessagingException {
 
         SimpleMailMessage message = new SimpleMailMessage();
         String to = "656806549@qq.com";
@@ -56,7 +57,7 @@ public class SendMailController {
 
         mailService.sendInlineResourceMail(to,subject,context,imgPath,rscId);
 
-        return "Sent Successfully";
+        return ResponseResult.success("邮件发送成功", null);
     }
 
 
@@ -65,7 +66,7 @@ public class SendMailController {
      * @return
      */
     @PostMapping("/sendAttachmentsMail")
-    public Object sendAttachmentsMail() throws Exception {
+    public ResponseResult sendAttachmentsMail() throws Exception {
 
 
 
@@ -82,13 +83,13 @@ public class SendMailController {
 //        filePaths.add("D:/Data/JPEGView_1.0.37.zip");
 //        filePaths.add("D:/Data/Web.xls");
 //        filePaths.add("D:/Data/成本.doc");
-        filePaths.add("D:/Data/金融服务平台数据汇总20200831105518.xls");
+        filePaths.add("D:/Data/金融服务平台数据汇总 20200831105518.xls");
 
         String context = "<html><head></head><body><h3>哈哈，什么都没有</h3></body></html>";
 
         mailService.sendAttachmentsMail(to,subject,context,filePaths);
 
-        return "Sent Successfully";
+        return ResponseResult.success("邮件发送成功", null);
     }
 
 }

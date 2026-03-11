@@ -1,5 +1,6 @@
 package com.oswizar.springbootsample.config.aspect;
 
+import cn.hutool.json.JSONUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 
 @Aspect
@@ -44,11 +45,11 @@ public class LogAspect {
         HttpServletRequest request = attributes.getRequest();
 
         // 记录下请求内容
-        logger.info("URL>>>>>>>>>>>>" + request.getRequestURL().toString());
-        logger.info("HTTP_METHOD>>>>" + request.getMethod());
-        logger.info("IP>>>>>>>>>>>>>" + request.getRemoteAddr());
-        logger.info("CLASS_METHOD>>>" + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
-        logger.info("ARGS>>>>>>>>>>>" + Arrays.toString(joinPoint.getArgs()));
+        logger.info("URL>>>>>>>>>>>>{}", request.getRequestURL().toString());
+        logger.info("HTTP_METHOD>>>>{}", request.getMethod());
+        logger.info("IP>>>>>>>>>>>>>{}", request.getRemoteAddr());
+        logger.info("CLASS_METHOD>>>{}", joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
+        logger.info("ARGS>>>>>>>>>>>{}", JSONUtil.toJsonStr(joinPoint.getArgs()));
     }
 
     /**
@@ -56,7 +57,7 @@ public class LogAspect {
      */
     @AfterReturning(returning = "result", pointcut = "webLog()")
     public void doAfterReturning(Object result) {
-        logger.info("RESPONSE>>>>>>>" + result + "\n");
+        logger.info("RESPONSE>>>>>>>{}", JSONUtil.toJsonStr(result));
     }
 
 }

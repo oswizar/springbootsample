@@ -5,7 +5,6 @@ import com.oswizar.springbootsample.mapper.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -38,8 +37,8 @@ public class ProductService {
         return productRepository.findByCategory(category);
     }
 
-    public List<Product> getProductsByPriceRange(BigDecimal minPrice, BigDecimal maxPrice) {
-        return productRepository.findByPriceBetween(minPrice, maxPrice);
+    public List<Product> getProductsByPriceRange(Double price1, Double price2) {
+        return productRepository.findByPriceBetween(price1, price2);
     }
 
     public List<Product> searchProducts(String keyword) {

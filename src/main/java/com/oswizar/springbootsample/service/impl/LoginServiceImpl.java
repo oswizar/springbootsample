@@ -25,11 +25,13 @@ import java.util.Objects;
 @Service
 public class LoginServiceImpl implements LoginService {
 
+    private static final String ROOT_USERNAME = "root";
+
     @Autowired
     AuthenticationManager authenticationManager;
 
     @Override
-    public ResponseResult login(User user) {
+    public Object login(User user) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
         Authentication authenticate = authenticationManager.authenticate(token);
         if (Objects.isNull(authenticate)) {
@@ -38,31 +40,38 @@ public class LoginServiceImpl implements LoginService {
         LoginUser loginUser = (LoginUser) authenticate.getPrincipal();
         Map<String, Object> payload = new HashMap<>();
         DateTime now = DateTime.now();
-        DateTime exp = now.offsetNew(DateField.SECOND, 60 * 60 * 12);
 
         // reserved claims
         // 签发时间
         payload.put(JWTPayload.ISSUED_AT, now);
         // 生效时间
         payload.put(JWTPayload.NOT_BEFORE, now);
-        // 过期时间
-        payload.put(JWTPayload.EXPIRES_AT, exp);
+        // 过期时间（root 用户不设置过期时间，永不过期）
+        boolean isRootUser = ROOT_USERNAME.equals(loginUser.getUsername());
+        if (!isRootUser) {
+            DateTime exp = now.offsetNew(DateField.SECOND, 60 * 60 * 12);
+            payload.put(JWTPayload.EXPIRES_AT, exp);
+        }
 
         // private claims
         payload.put("username", loginUser.getUsername());
 
         String jwt = JWTUtil.createToken(payload, ConfigConstants.JWT_SECRET_KEY.getBytes(StandardCharsets.UTF_8));
         Map<String, String> tokenMap = Map.of("token", jwt);
-        RedisUtils.set("login:" + loginUser.getUsername(), loginUser, 60 * 60 * 12);
+        // root 用户 Redis 缓存永不过期，其他用户 12 小时过期
+        if (isRootUser) {
+            RedisUtils.set("login:" + loginUser.getUsername(), loginUser);
+        } else {
+            RedisUtils.set("login:" + loginUser.getUsername(), loginUser, 60 * 60 * 12);
+        }
         return ResponseResult.success(tokenMap);
     }
 
     @Override
-    public ResponseResult logout() {
+    public void logout() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         LoginUser principal = (LoginUser) authentication.getPrincipal();
         String userKey = "login:" + principal.getUsername();
         RedisUtils.del(userKey);
-        return ResponseResult.success(null);
     }
 }

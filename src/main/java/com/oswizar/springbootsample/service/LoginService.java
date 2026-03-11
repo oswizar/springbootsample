@@ -4,7 +4,7 @@ import com.oswizar.springbootsample.model.ResponseResult;
 import com.oswizar.springbootsample.entity.User;
 
 public interface LoginService {
-    ResponseResult login(User user);
+    Object login(User user);
 
-    ResponseResult logout();
+    void logout();
 }

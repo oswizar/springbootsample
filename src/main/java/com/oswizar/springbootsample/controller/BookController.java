@@ -2,6 +2,7 @@ package com.oswizar.springbootsample.controller;
 
 
 import com.oswizar.springbootsample.entity.Book;
+import com.oswizar.springbootsample.model.ResponseResult;
 import com.oswizar.springbootsample.service.BookService;
 import com.oswizar.springbootsample.util.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,18 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * <p>
- *  前端控制器
- * </p>
- *
- * @author oswizar
- * @since 2020-08-13
- */
 @RestController
 @RequestMapping("/book")
 public class BookController {
@@ -35,13 +28,13 @@ public class BookController {
 
 
     @PostMapping("/findBookById")
-    public Object findBookById(@RequestBody Book book) {
-        return bookService.getById(book.getId());
-
+    public ResponseResult findBookById(@RequestBody Book book) {
+        Object result = bookService.getById(book.getId());
+        return ResponseResult.success(result);
     }
 
     @PostMapping("/testBook")
-    public Object testBook(@RequestBody Book book) {
+    public ResponseResult testBook(@RequestBody Book book) {
         System.out.println(book);
 
         System.out.println(request.getServletPath());
@@ -72,7 +65,7 @@ public class BookController {
 //        System.out.println(indicess.get(i + 1));
 
 //        RedisUtils.llSetSingle("indicess",8);
-        return book;
+        return ResponseResult.success(book);
 
     }
 

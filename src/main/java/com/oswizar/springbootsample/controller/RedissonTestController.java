@@ -1,5 +1,6 @@
 package com.oswizar.springbootsample.controller;
 
+import com.oswizar.springbootsample.model.ResponseResult;
 import com.oswizar.springbootsample.util.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
@@ -27,7 +28,7 @@ public class RedissonTestController {
     final static String FLASH_SALE_LOCK_KEY = "FLASH_SALE_LOCK_KEY";
 
     @GetMapping("/redisLockTest")
-    public void redisLockTest() {
+    public ResponseResult redisLockTest() {
         // 初始化秒杀库存数量
         RedisUtils.set(FLASH_SALE_GOODS_STOCK, 10);
         List<Future<Integer>> futureList = new ArrayList<>();
@@ -52,6 +53,7 @@ public class RedissonTestController {
                 log.error("get stock num error", e);
             }
         });
+        return ResponseResult.success("测试完成", null);
     }
 
     private int lockStock() {

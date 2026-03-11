@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
@@ -11,29 +13,22 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
-/**
- * <p>
- *
- * </p>
- *
- * @author oswizar
- * @since 2020-08-13
- */
 @Data
 @TableName("t_author")
 public class Author implements Serializable {
+    @Serial
     private static final long serialVersionUID=1L;
     @TableId(value = "id", type = IdType.AUTO)
-    @NotNull
+    @NotNull(message = "作者id不能为空")
     private Integer id;
-    @NotNull
+    @NotNull(message = "作者姓名不能为空")
     private String name;
-    @NotNull
+    @NotNull(message = "作者年龄不能为空")
     private Integer age;
 
     @TableField(exist = false)

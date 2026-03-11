@@ -14,6 +14,7 @@ import com.alipay.api.response.AlipayTradePagePayResponse;
 import com.alipay.api.response.AlipayTradePrecreateResponse;
 import com.alipay.api.response.AlipayTradeQueryResponse;
 import com.oswizar.springbootsample.config.AlipayConfig;
+import com.oswizar.springbootsample.model.ResponseResult;
 import com.oswizar.springbootsample.util.ZxingUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -23,8 +24,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -202,17 +203,17 @@ public class AliPayController {
      */
     @GetMapping("/tradeQuery/{outTradeNo}")
     @ResponseBody
-    public String tradeQuery(@PathVariable String outTradeNo) throws AlipayApiException {
-
+    public ResponseResult tradeQuery(@PathVariable String outTradeNo) throws AlipayApiException {
+    
         AlipayTradeQueryRequest request = new AlipayTradeQueryRequest();
         Map<String, String> param = new HashMap<>();
-
+    
         param.put("out_trade_no", outTradeNo);
-
+    
         String bizContext = JSON.toJSONString(param);
         log.info("请求支付宝统一交易查询接口参数=[{}]", bizContext);
         request.setBizContent(bizContext);
-
+    
         AlipayTradeQueryResponse response = alipayClient.execute(request);
         log.info("请求支付宝统一交易查询接口返回=[{}]", JSON.toJSONString(response));
         String message;
@@ -221,16 +222,16 @@ public class AliPayController {
             String tradeStatus = response.getTradeStatus();
             switch (tradeStatus) {
                 case "WAIT_BUYER_PAY":
-                    message = "交易创建,等待买家付款,请前往支付宝账单或交易记录完成付款";
+                    message = "交易创建，等待买家付款，请前往支付宝账单或交易记录完成付款";
                     break;
                 case "TRADE_CLOSED":
-                    message = "未付款交易超时关闭,或支付完成后全额退款";
+                    message = "未付款交易超时关闭，或支付完成后全额退款";
                     break;
                 case "TRADE_SUCCESS":
                     message = "交易支付成功";
                     break;
                 case "TRADE_FINISHED":
-                    message = "交易结束,不可退款";
+                    message = "交易结束，不可退款";
                     break;
                 default:
                     message = "其他错误";
@@ -241,20 +242,20 @@ public class AliPayController {
             String subCode = response.getSubCode();
             switch (subCode) {
                 case "ACQ.SYSTEM_ERROR":
-                    message = "系统错误,重新发起请求";
+                    message = "系统错误，重新发起请求";
                     break;
                 case "ACQ.INVALID_PARAMETER":
-                    message = "参数无效,检查请求参数,修改后重新发起请求";
+                    message = "参数无效，检查请求参数，修改后重新发起请求";
                     break;
                 case "ACQ.TRADE_NOT_EXIST":
-                    message = "查询的交易不存在,检查传入的交易号是否正确,修改后重新发起请求";
+                    message = "查询的交易不存在，检查传入的交易号是否正确，修改后重新发起请求";
                     break;
                 default:
                     message = "其他错误";
                     break;
             }
         }
-        return message;
+        return ResponseResult.success(message, null);
     }
 
     /**
@@ -269,7 +270,7 @@ public class AliPayController {
      */
     @PostMapping("/tradeClose")
     @ResponseBody
-    public String tradeClose(String outTradeNo) throws AlipayApiException {
+    public ResponseResult tradeClose(String outTradeNo) throws AlipayApiException {
         AlipayTradeCloseRequest request = new AlipayTradeCloseRequest();
 
         Map<String, String> param = new HashMap<>();
@@ -284,9 +285,9 @@ public class AliPayController {
         AlipayTradeCloseResponse response = alipayClient.execute(request);
         log.info("请求支付宝关闭交易接口返回=[{}]", JSON.toJSONString(response));
         if (response.isSuccess()) {
-            return "关闭成功!!!";
+            return ResponseResult.success("关闭成功", null);
         } else {
-            return "关闭失败!!!";
+            return ResponseResult.fail(500, "关闭失败");
         }
     }
 
@@ -368,7 +369,7 @@ public class AliPayController {
      */
     @PostMapping("/notify")
     @ResponseBody
-    public String alipayNotify(HttpServletRequest request) throws AlipayApiException {
+    public ResponseResult alipayNotify(HttpServletRequest request) throws AlipayApiException {
         Map<String, String> params = convertRequestParamsToMap(request);
         log.info("notify params=[{}]", JSONObject.toJSON(params));
         // 验证签名
@@ -377,10 +378,10 @@ public class AliPayController {
         if (signVerified) {
             //处理你的业务逻辑，更细订单状态等
             log.info("支付宝异步通知返回成功");
-            return ("验签success");
+            return ResponseResult.success("验签 success", null);
         } else {
-            log.info("验证失败,不去更新状态");
-            return ("验签failure");
+            log.info("验证失败，不去更新状态");
+            return ResponseResult.fail(500, "验签 failure");
         }
     }
 
@@ -392,20 +393,20 @@ public class AliPayController {
      */
     @GetMapping("/return")
     @ResponseBody
-    public String alipayReturn(HttpServletRequest request) throws AlipayApiException {
+    public ResponseResult alipayReturn(HttpServletRequest request) throws AlipayApiException {
         Map<String, String> params = convertRequestParamsToMap(request);
-        log.info("支付宝服务器同步通知请求参数params=[{}]", JSONObject.toJSON(params));
-
+        log.info("支付宝服务器同步通知请求参数 params=[{}]", JSONObject.toJSON(params));
+    
         // 验证签名
         boolean signVerified = AlipaySignature.rsaCheckV1(params, AlipayConfig.alipay_public_key, AlipayConfig.charset, AlipayConfig.sign_type);
         log.info("return signVerified=[{}]", signVerified);
-
+    
         if (signVerified) {
             log.info("支付宝同步通知返回验签成功");
-            return ("支付success");
+            return ResponseResult.success("支付 success", null);
         } else {
-            log.info("验证失败,不去更新状态");
-            return ("验签failure");
+            log.info("验证失败，不去更新状态");
+            return ResponseResult.fail(500, "验签 failure");
         }
     }
 
